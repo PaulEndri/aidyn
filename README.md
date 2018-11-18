@@ -2,7 +2,6 @@
 
 [![npm version](https://img.shields.io/npm/v/axios.svg?style=flat-square)](https://www.npmjs.org/package/aidyn)
 [![install size](https://packagephobia.now.sh/badge?p=axios)](https://packagephobia.now.sh/result?p=aidyn)
-[![npm downloads](https://img.shields.io/npm/dm/axios.svg?style=flat-square)](http://npm-stat.com/charts.html?package=aidyn)
 
 Simple Framework for rapidly building Discord Bot Commands jumping straight to the business logic
 
@@ -28,10 +27,15 @@ Using yarn:
 $ yarn install aidyn
 ```
 
+## Requirements
+
+Node v8 LTS or higher
+
 ## Example
 
 Creating a Class
 
+Javascript
 ```js
 class ExampleCommand extends Command {
     static get NAME() {
@@ -54,6 +58,7 @@ class ExampleCommand extends Command {
 }
 ```
 
+Typescript
 ```ts
 class ExampleCommand extends Command {
     static NAME  = 'example';
