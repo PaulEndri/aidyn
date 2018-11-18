@@ -1,0 +1,26 @@
+{
+  "name": "aidyn-discord-bot-framework",
+  "version": "0.1.1",
+  "description": "Aidyn: Discord Bot Framework",
+  "homepage": "https://github.com/PaulEndri/aidyn#readme",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PaulEndri/aidyn"
+  },
+  "author": "Juan Sedano",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "dotenv": "^6.1.0",
+    "mongoose": "^5.3.11"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.0",
+    "@types/mongodb": "^3.1.14",
+    "@types/mongoose": "^5.3.1"
+  }
+}
