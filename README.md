@@ -84,9 +84,19 @@ Using the framework/class
     const prefix = '%';
 
     comands[ExampleCommand.NAME] = ExampleCommand;
-    const Aidyn = new Aidyn(process.env.conString, process.env.botToken, prefix);
+    const aidyn = new Aidyn(process.env.conString, process.env.botToken, prefix);
 
-    Aidyn.start(commands);
+    aidyn.start(commands);
+```
+
+## Aidyn Constructor Params
+
+```js
+    const aidyn = new Aidyn(
+        conString, // Database Connection String for a Mongo DB
+        token, // Discord Bot Token
+        prefix, // bot prefix, defaults to `%`
+    )
 ```
 
 ## Message GetContext
