@@ -14,7 +14,7 @@ export default class Aidyn {
     private Loaded:           boolean;
     public Context:           Context;
 
-    constructor(dbString: string, botToken: string, prefix: string = '%') {
+    constructor(dbString?: string, botToken?: string, prefix: string = '%') {
         this.Client           = new Client();
         this.Loaded           = false;
         this.Context          = new Context(this.Client);
