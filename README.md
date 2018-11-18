@@ -1,6 +1,5 @@
 # Aidyn: Discord Bot Framework
 
-[![npm version](https://img.shields.io/npm/v/axios.svg?style=flat-square)](https://www.npmjs.org/package/aidyn)
 [![install size](https://packagephobia.now.sh/badge?p=axios)](https://packagephobia.now.sh/result?p=aidyn)
 
 Simple Framework for rapidly building Discord Bot Commands jumping straight to the business logic
