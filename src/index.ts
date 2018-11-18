@@ -1,12 +1,7 @@
-import Aidyn from "./app";
-import Commands from "./Database/Models/Commands";
-import Command from "./Abstractions/Command";
+import { CommandsSchema } from "./Database/Models/Commands";
+import Aidyn from './app';
 
-export const exportedModules = {
-    Command,
-    Schemas: {
-        Commands
-    }
-}
+export const Command = require('./Abstractions/Command');
+export const CommandSchema = CommandsSchema;
 
 export default Aidyn;

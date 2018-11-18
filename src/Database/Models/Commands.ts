@@ -11,7 +11,7 @@ export interface ICommandsModel extends ICommands, Document {};
 //     Name: Types.String
 // });
 
-const CommandsSchema: Schema = new Schema({
+export const CommandsSchema: Schema = new Schema({
     AllowedRoles:    [Types.String],
     AllowedChannels: [Types.String],
     AllowedUsers:    [Types.String],
