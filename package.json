@@ -1,11 +1,11 @@
 {
   "name": "aidyn",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Aidyn: Discord Bot Framework",
   "homepage": "https://github.com/PaulEndri/aidyn#readme",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r ts-node/register src/**/*.spec.ts"
   },
   "repository": {
     "type": "git",
@@ -19,8 +19,15 @@
     "mongoose": "^5.3.11"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
     "@types/dotenv": "^6.1.0",
+    "@types/mocha": "^5.2.5",
     "@types/mongodb": "^3.1.14",
-    "@types/mongoose": "^5.3.1"
+    "@types/mongoose": "^5.3.1",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.6",
+    "typescript-tools": "^0.3.1"
   }
 }
