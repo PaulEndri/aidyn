@@ -84,7 +84,12 @@ Using the framework/class
     const prefix = '%';
 
     comands[ExampleCommand.NAME] = ExampleCommand;
-    const aidyn = new Aidyn(process.env.conString, process.env.botToken, prefix);
+    const aidyn = new Aidyn({
+        Prefix: prefix,
+        ConnectionString: '',
+        BotToken: '',
+        Logging: 0
+    });
 
     aidyn.start(commands);
 ```
@@ -92,11 +97,13 @@ Using the framework/class
 ## Aidyn Constructor Params
 
 ```js
-    const aidyn = new Aidyn(
-        conString, // Database Connection String for a Mongo DB
-        token, // Discord Bot Token
-        prefix, // bot prefix, defaults to `%`
-    )
+    const aidyn = new Aidyn({
+        ConnectionString: conString, // Database Connection String for a Mongo DB
+        BotToken: token, // Discord Bot Token
+        Prefix: prefix, // bot prefix, defaults to `%`
+        Logging: 0 // (EXPERIMENTAL) 0 for no logging, 1 to log commands, 2 to log everything (NOT RECOMMENDED/),
+        CustomProcessor: null // If you need to extend your own processor, you can inject it using this param
+    })
 ```
 
 ## Message GetContext
