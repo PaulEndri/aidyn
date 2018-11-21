@@ -44,7 +44,7 @@ export default class Aidyn {
 
         const {Client, Processor, BotToken} = this;
 
-        Client.on('message', Processor.Handle);
+        Client.on('message', (m) => Processor.Handle(m));
 
         return Client
             .login(BotToken || process.env.BOT_TOKEN)

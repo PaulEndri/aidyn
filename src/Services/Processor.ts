@@ -61,20 +61,6 @@ export default class Processor implements IProcessor {
         return data;
     }
 
-    public async SaveLog(log: ILogsModel): Promise<boolean> {
-        if (this.DbInUse === false) {
-            return false;
-        }
-
-        if (this.Logging >= 2 || (this.Logging === 1 && log.Command)) {
-            await log.save();
-
-            return true;
-        }
-
-        return false;
-    }
-
     public async LoadCommands(Commands: any, useDB: boolean): Promise<ICommandList> {
         if (this.Context.Loading === true) {
             const deferred = new Promise((resolve) => setTimeout(resolve, 300));
@@ -89,8 +75,23 @@ export default class Processor implements IProcessor {
         }
 
         this.DbInUse = useDB;
+        this.Loaded  = true;
 
         return this.Commands;
+    }
+
+    public async SaveLogs(log: ILogsModel): Promise<boolean> {
+        if (this.DbInUse === false) {
+            return false;
+        }
+
+        if (this.Logging >= 2 || (this.Logging === 1 && log.Command)) {
+            await log.save();
+
+            return true;
+        }
+
+        return false;
     }
 
     public async Handle(message: Message): Promise<any> {
@@ -127,7 +128,7 @@ export default class Processor implements IProcessor {
             logs.Runtime = new Date().getTime() - start;
             logs.Success = true;
 
-            await this.SaveLog(<ILogsModel>logs)
+            await this.SaveLogs(logs);
 
             return result
         } catch(e) {
@@ -135,7 +136,7 @@ export default class Processor implements IProcessor {
             logs.Success  = false;
             logs.Response = e.message;
 
-            await this.SaveLog(<ILogsModel>logs)
+            await this.SaveLogs(logs);
             console.error('[Fatal Error]', e)
 
             return Promise.reject(e);

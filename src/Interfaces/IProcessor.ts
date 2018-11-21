@@ -12,5 +12,5 @@ export default interface IProcessor {
 
     LoadCommands: (Commands: any, useDB: boolean) => Promise<ICommandList>;
     Handle:       (message: Message) => Promise<any>;
-    SaveLog:      (log: ILogsModel) => Promise<boolean>;
+    SaveLogs:     (log: ILogsModel) => Promise<boolean>;
 }
