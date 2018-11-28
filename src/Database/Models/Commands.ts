@@ -5,12 +5,6 @@ const {Types} = Schema;
 
 export interface ICommandsModel extends ICommands, Document {};
 
-// const DataSchema: Schema = new Schema({
-//     AllowedRoles: [Types.String],
-//     AllowedChannels: [Types.String],
-//     Name: Types.String
-// });
-
 export const CommandsSchema: Schema = new Schema({
     AllowedRoles:    [Types.String],
     AllowedChannels: [Types.String],

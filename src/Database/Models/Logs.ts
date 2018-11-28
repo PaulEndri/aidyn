@@ -5,12 +5,6 @@ const {Types} = Schema;
 
 export interface ILogsModel extends ILogs, Document {};
 
-// const DataSchema: Schema = new Schema({
-//     AllowedRoles: [Types.String],
-//     AllowedChannels: [Types.String],
-//     Name: Types.String
-// });
-
 const LogsSchema: Schema = new Schema({
     User      : Types.String,
     CreatedAt : Types.Date,

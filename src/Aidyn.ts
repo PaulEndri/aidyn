@@ -37,7 +37,7 @@ export default class Aidyn {
 
     public async Start(commands?: any): Promise<any> {
         if (this.Loaded === false && !commands) {
-            throw new Error("No Commands Loaded!");
+            throw new Error("[FAILURE] No Commands Loaded!");
         } else if(this.Loaded === false && commands) {
             await this.LoadCommands(commands);
         }

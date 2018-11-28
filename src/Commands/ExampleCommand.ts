@@ -1,6 +1,10 @@
 import Command from '../Abstractions/Command';
 import { Message } from 'discord.js';
 
+/**
+ * @module command
+ * @internal
+ */
 class TestCommand extends Command {
     static NAME        = 'TestCommand';
     static TEST_OUTPUT = 'ACCESSED SUCCESSFULLY';

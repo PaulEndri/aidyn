@@ -2,6 +2,11 @@ import ICommand from '../Interfaces/ICommand';
 import { Message, Collection } from 'discord.js';
 import Commands from '../Database/Models/Commands';
 
+/**
+ * @module Command
+ * @preferred
+ */
+
 abstract class Command implements ICommand {
     public AllowedChannels  : string[];
     public AllowedRoles     : string[];
@@ -90,15 +95,15 @@ abstract class Command implements ICommand {
         this.Modified = true;
     }
 
-    public AddAllowedChannel(channelId: string, local = false): void {
+    public AddAllowedChannel(channelId: string, local = true): void {
         return this.ModifyPermissions('Channel', 'add', channelId, local);
     }
 
-    public AddAllowedRole(roleId: string, local = false): void {
+    public AddAllowedRole(roleId: string, local = true): void {
         return this.ModifyPermissions('Role', 'add', roleId, local);
     }
 
-    public AddAllowedUser(user: string, local = false): void {
+    public AddAllowedUser(user: string, local = true): void {
         return this.ModifyPermissions('User', 'add', user, local);
     }
 
@@ -139,15 +144,15 @@ abstract class Command implements ICommand {
         return result;
     }
 
-    public RemoveAllowedChannel(channelId: string, local = false): void {
+    public RemoveAllowedChannel(channelId: string, local = true): void {
         return this.ModifyPermissions('Channel', 'remove', channelId, local);
     }
 
-    public RemoveAllowedRole(roleId: string, local = false): void {
+    public RemoveAllowedRole(roleId: string, local = true): void {
         return this.ModifyPermissions('Role', 'remove', roleId, local);
     }
 
-    public RemoveAllowedUsers(user: string, local = false): void {
+    public RemoveAllowedUsers(user: string, local = true): void {
         return this.ModifyPermissions('User', 'remove', user, local);
     }
 
