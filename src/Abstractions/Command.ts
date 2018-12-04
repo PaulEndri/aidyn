@@ -191,6 +191,10 @@ abstract class Command implements ICommand {
 
         return command.save();
     }
+
+    public Validate(message: Message): boolean {
+        return this.ValidateRoles(message.member.roles) || this.ValidateUsers(message.member.id)
+    }
 }
 
 export default Command;

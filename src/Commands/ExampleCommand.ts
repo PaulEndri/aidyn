@@ -9,6 +9,8 @@ class TestCommand extends Command {
     static NAME        = 'TestCommand';
     static TEST_OUTPUT = 'ACCESSED SUCCESSFULLY';
 
+    public Signature = 'test command';
+
     public Name(): string { 
         return TestCommand.NAME;
     }

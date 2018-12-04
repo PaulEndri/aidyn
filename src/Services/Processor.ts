@@ -4,6 +4,7 @@ import ICommandList from "../Interfaces/ICommandList";
 import CommandList from "../Models/CommandList";
 import IProcessor from "../Interfaces/IProcessor";
 import Logs, { ILogsModel } from "../Database/Models/Logs";
+import { ICommandSignature } from "../Interfaces/ICommandSignature";
 
 const EMPTY_COMMAND = {
     AllowedChannels: [],
@@ -59,6 +60,37 @@ export default class Processor implements IProcessor {
         })
 
         return data;
+    }
+
+    private formatCommandSignatures(signatures: ICommandSignature[]): string[] {
+        const maxLength           = signatures.reduce((a, b) => b.Name.length > a.Name.length ? b : a).Name.length;
+        const formattedSignatures = signatures.map(({Name, Signature}) => `${Name.padEnd(maxLength, ' ')} | ${Signature}`);
+
+        formattedSignatures.unshift('-'.padEnd(30));
+        formattedSignatures.unshift(`${'Command'.padEnd(maxLength, ' ')} | Signature`);
+        formattedSignatures.unshift('```');
+        formattedSignatures.push('```')
+
+        return formattedSignatures;
+    } 
+
+    private GetCommandSignatures(message: Message): ICommandSignature[] {
+        return Object.values(this.Commands)
+            .filter((command) => command.Validate(message))
+            .map((command) => ({
+                Name:      command.Name(),
+                Signature: command.Signature
+            }));
+    }
+
+    public HelpCommand(message: Message) {
+        const commands = this.GetCommandSignatures(message);
+        
+        if (commands.length > 0) {
+            return message.channel.send(this.formatCommandSignatures(commands).join('\n'))
+        }
+
+        return message.channel.send('No Commands Found')
     }
 
     public async LoadCommands(Commands: any, useDB: boolean): Promise<ICommandList> {
@@ -122,6 +154,8 @@ export default class Processor implements IProcessor {
                 logs.Command  = name.toLowerCase();
 
                 result = await this.Commands[name.toLowerCase()].Call(message);
+            } else if (name === 'help') {
+                result = await this.HelpCommand(message)
             }
 
 
