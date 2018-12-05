@@ -47,7 +47,7 @@ abstract class ChannelAdmin extends Command {
 
     private async RunDelete(message: Message, guild: Guild, channel: string): Promise<any> {
         const channelId     = channel.replace(/\D/g, '');
-        const serverChannel = guild.channels.find('id', channelId);
+        const serverChannel = guild.channels.find(({id}) => id === channelId);
         const deleteMessage = `Deleted by PixelPub on command by ${message.author.username}`;
         const haystack      = [
             Object.getPrototypeOf(this).constructor.TEXT_CATEGORY,
@@ -59,7 +59,7 @@ abstract class ChannelAdmin extends Command {
             return message.channel.send(`Deleted Text Channel ${serverChannel.name} succesfully`);
         } else {
             //They might/should have done the full name to delete a vc, so, instead lets try this
-            const serverVoiceChannel = guild.channels.find('name', channel);
+            const serverVoiceChannel = guild.channels.find(({name}) => name === channel);
 
             if (serverVoiceChannel && haystack.includes(serverVoiceChannel.parentID)) {
                 await serverVoiceChannel.delete(deleteMessage);
@@ -82,7 +82,7 @@ abstract class ChannelAdmin extends Command {
         } = context;
 
 
-        if (remove) {
+        if (remove !== undefined) {
             if (!channel) {
                 return message.channel.send('Please specify a channel');
             }
