@@ -1,4 +1,4 @@
-import Command from '..//Command';
+import Command from '../Command';
 import { Message, Guild, GuildChannel } from 'discord.js';
 
 abstract class ChannelAdmin extends Command {
