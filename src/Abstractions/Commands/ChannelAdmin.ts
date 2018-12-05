@@ -59,12 +59,11 @@ abstract class ChannelAdmin extends Command {
             return message.channel.send(`Deleted Text Channel ${serverChannel.name} succesfully`);
         } else {
             //They might/should have done the full name to delete a vc, so, instead lets try this
-            const channelName = channel.substring(1).slice(0, channel.length - 2);
-            const serverVoiceChannel = guild.channels.find('name', channelName);
+            const serverVoiceChannel = guild.channels.find('name', channel);
 
             if (serverVoiceChannel && haystack.includes(serverVoiceChannel.parentID)) {
                 await serverVoiceChannel.delete(deleteMessage);
-                return message.channel.send(`Deleted Voice Channel ${channelName} succesfully`);
+                return message.channel.send(`Deleted Voice Channel ${channel} succesfully`);
             }
         }
 
