@@ -120,28 +120,64 @@ abstract class Command implements ICommand {
             .then(() => this.Save());
     }
 
-    public GetContext(message: Message): any {
-        const parts  = message.content.split(' ').slice(1);
-        const result = {
-            args: []
-        };
+    private GetParameterizedContext(content: string) {
+        const parts   = content.split('--');
+        const results = { args: []};
+
+        parts.forEach((part) => {
+            const words = part.split(' ');
+
+            if (words[0].indexOf('=') >= 0) {
+                const keys = words[0].split('-');
+
+                if (words.length === 1) {
+                    results[keys[0]] = keys[1];
+                } else {
+                    const key   = keys[0];
+                    const value = [keys[1], ...words.slice(1)];
+
+                    results[key] = value;
+                }
+            } else {
+                results[words[0]] = words.slice(1).join(' ')
+            }
+        });
+
+        return results;
+    }
+
+    private GetGenericContext(content: string) {
+        const parts   = content.split(' ');
+        const results = {args: []};
 
         parts.forEach((part: string) => {
             if (part.indexOf('--') === 0) {
                 const param = part.split('=');
 
-                result[param[0].replace('--', '')] = param[1] || true;
+                results[param[0].replace('--', '')] = param[1] || true;
             } else {
-                result.args.push(part);
+                results.args.push(part);
             }
         });
 
-        if (result.args.length < 2) {
-            result.args.push('');
-            result.args.push('');
+        return results;
+
+    }
+    public GetContext(message: Message, parameterized = false): any {
+        let results: any;
+
+        if (parameterized === true) {
+            results = this.GetParameterizedContext(message.content);
+        } else {
+            results = this.GetGenericContext(message.content);
         }
 
-        return result;
+        if (results.args.length < 2) {
+            results.args.push('');
+            results.args.push('');
+        }
+
+        return results;
     }
 
     public RemoveAllowedChannel(channelId: string, local = true): void {

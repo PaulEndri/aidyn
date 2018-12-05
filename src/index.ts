@@ -1,8 +1,16 @@
 import { CommandsSchema } from "./Database/Models/Commands";
+import Command from './Abstractions/Command';
+import Processor from './Services/Processor';
+import RoleGranter from './Abstractions/Commands/RoleGranter';
+import ChannelAdmin from './Abstractions/Commands/ChannelAdmin';
 import Aidyn from './Aidyn';
 
-export const Command = require('./Abstractions/Command');
-export const CommandSchema = CommandsSchema;
-export const Processor = require('./Services/Processor');
+export {
+    RoleGranter,
+    ChannelAdmin,
+    Processor,
+    Command,
+    CommandsSchema
+};
 
 export default Aidyn;
