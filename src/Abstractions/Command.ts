@@ -128,7 +128,7 @@ abstract class Command implements ICommand {
             const words = part.split(' ');
 
             if (words[0].indexOf('=') >= 0) {
-                const keys = words[0].split('-');
+                const keys = words[0].split('=');
 
                 if (words.length === 1) {
                     results[keys[0]] = keys[1];
@@ -136,7 +136,7 @@ abstract class Command implements ICommand {
                     const key   = keys[0];
                     const value = [keys[1], ...words.slice(1)];
 
-                    results[key] = value;
+                    results[key] = value.join(' ');
                 }
             } else {
                 results[words[0]] = words.slice(1).join(' ')

@@ -89,7 +89,7 @@ abstract class ChannelAdmin extends Command {
             return await this.RunDelete(message, message.guild, channel);
         }
 
-        if (!text && !voice) {
+        if (text === undefined && voice === undefined) {
             message.channel.send('Please specify voice or text');
         } else if (!name) {
             message.channel.send('Please specify a name');
