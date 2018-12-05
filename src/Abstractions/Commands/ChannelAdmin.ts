@@ -95,12 +95,12 @@ abstract class ChannelAdmin extends Command {
             message.channel.send('Please specify a name');
         }
 
-        if (text) {
-            return await this.CreateTextChannel(message.guild, name, topic);
+        if (text !== undefined) {
+            await this.CreateTextChannel(message.guild, name, topic);
         }
 
-        if (voice) {
-            return await this.CreateVoiceChannel(message.guild, name, topic);
+        if (voice !== undefined) {
+            await this.CreateVoiceChannel(message.guild, name, topic);
         }
 
         return message.channel.send(`Created ${name} channel(s)`);
