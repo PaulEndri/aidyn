@@ -1,9 +1,9 @@
 import Command from '../Command';
 import { Message } from 'discord.js';
 
-abstract class RoleGranter extends Command {
-    static NAME      = 'RoleGranter';
-    static NAMESPACE = 'RoleGranter'
+abstract class RoleAdmin extends Command {
+    static NAME      = 'RoleAdmin';
+    static NAMESPACE = 'RoleAdmin'
     static ROLE      = '';
     static ROLES     = [''];
 
@@ -60,4 +60,4 @@ abstract class RoleGranter extends Command {
     }
 }
 
-export default RoleGranter;
+export default RoleAdmin;

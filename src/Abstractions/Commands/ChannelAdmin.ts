@@ -15,6 +15,14 @@ abstract class ChannelAdmin extends Command {
         return Object.getPrototypeOf(this).constructor.NAMESPACE;
     }
 
+    public get TextCategoryId(): string {
+        return Object.getPrototypeOf(this).constructor.TEXT_CATEGORY;
+    }
+
+    public get VoiceCategoryId(): string {
+        return Object.getPrototypeOf(this).constructor.VOICE_CATEGORY;
+    }
+
     public constructor(channels: string[], roles: string[], users: string[], dbRequired = false) {
         super(channels, roles, users, dbRequired);
 
@@ -26,23 +34,37 @@ abstract class ChannelAdmin extends Command {
     }
 
     private async CreateVoiceChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel> {
-        const channel = await guild.createChannel(name, 'voice', [], 'Created by Pixel Pub Bot');
-                
+        const parent      = guild.channels.find((_channel) => _channel.id === this.VoiceCategoryId)
+        const permissions = parent.permissionOverwrites.map(({
+            allow, allowed, channel, id, denied, deny, type
+        }) => ({
+            allow, allowed, channel, id, denied, deny, type
+        }))
+    
+        const channel = await guild.createChannel(name, 'voice', permissions, 'Created using Aidyn');
+
         if (topic) {
-            await channel.setTopic(topic, 'Set by Pixel Pub Bot');
+            await channel.setTopic(topic, 'Set using Aidyn');
         }
 
-        return channel.setParent(Object.getPrototypeOf(this).constructor.VOICE_CATEGORY);
+        return channel.setParent(this.VoiceCategoryId);
     }
 
     private async CreateTextChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel> {
-        const channel = await guild.createChannel(name, 'text', [], 'Created by Pixel Pub Bot');
-                
+        const parent      = guild.channels.find((_channel) => _channel.id === this.TextCategoryId)
+        const permissions = parent.permissionOverwrites.map(({
+            allow, allowed, channel, id, denied, deny, type
+        }) => ({
+            allow, allowed, channel, id, denied, deny, type
+        }))
+
+        const channel = await guild.createChannel(name, 'text', permissions, 'Created using Aidyn');
+
         if (topic) {
-            await channel.setTopic(topic, 'Set by Pixel Pub Bot');
+            await channel.setTopic(topic, 'Set using Aidyn');
         }
 
-        return channel.setParent(Object.getPrototypeOf(this).constructor.TEXT_CATEGORY);
+        return channel.setParent(this.TextCategoryId);
     }
 
     private async RunDelete(message: Message, guild: Guild, channel: string): Promise<any> {
@@ -50,8 +72,8 @@ abstract class ChannelAdmin extends Command {
         const serverChannel = guild.channels.find(({id}) => id === channelId);
         const deleteMessage = `Deleted by PixelPub on command by ${message.author.username}`;
         const haystack      = [
-            Object.getPrototypeOf(this).constructor.TEXT_CATEGORY,
-            Object.getPrototypeOf(this).constructor.VOICE_CATEGORY
+            this.TextCategoryId,
+            this.VoiceCategoryId
         ];
     
         if (serverChannel && haystack.includes(serverChannel.parentID)) {

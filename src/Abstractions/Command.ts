@@ -120,6 +120,10 @@ abstract class Command implements ICommand {
             .then(() => this.Save());
     }
 
+    public ContextInjection(context?: any) {
+        return {}
+    }
+
     private GetParameterizedContext(content: string) {
         const parts   = content.split('--');
         const results = { args: []};
@@ -177,7 +181,7 @@ abstract class Command implements ICommand {
             results.args.push('');
         }
 
-        return results;
+        return {...results, ...this.ContextInjection(results)};
     }
 
     public RemoveAllowedChannel(channelId: string, local = true): void {

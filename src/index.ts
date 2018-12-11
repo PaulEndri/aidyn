@@ -1,12 +1,12 @@
 import { CommandsSchema } from "./Database/Models/Commands";
 import Command from './Abstractions/Command';
 import Processor from './Services/Processor';
-import RoleGranter from './Abstractions/Commands/RoleGranter';
+import RoleAdmin from './Abstractions/Commands/RoleAdmin';
 import ChannelAdmin from './Abstractions/Commands/ChannelAdmin';
 import Aidyn from './Aidyn';
 
 export {
-    RoleGranter,
+    RoleAdmin,
     ChannelAdmin,
     Processor,
     Command,
