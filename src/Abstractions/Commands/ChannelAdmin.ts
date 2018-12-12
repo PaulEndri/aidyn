@@ -4,7 +4,6 @@ import { Message, Guild, GuildChannel, PermissionOverwrites, Collection } from '
 abstract class ChannelAdmin extends Command {
     static NAME           = 'ChannelAdmin';
     static NAMESPACE      = 'ChannelAdmin';
-    static ROLES          = [''];
     static VOICE_CATEGORY = '';
     static TEXT_CATEGORY  = '';
 
@@ -62,9 +61,9 @@ abstract class ChannelAdmin extends Command {
 
     private mapPermissions(permissions: Collection<string, PermissionOverwrites>): any {
         return permissions.map(({
-            allow, allowed, channel, id, denied, deny, type
+            allow, id, deny, type
         }) => ({
-            allow, allowed, channel, id, denied, deny, type
+            allow, id, deny, type
         }))
     }
 
