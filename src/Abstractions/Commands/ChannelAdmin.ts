@@ -35,11 +35,8 @@ abstract class ChannelAdmin extends Command {
 
     private async CreateVoiceChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel> {
         const parent      = guild.channels.find((_channel) => _channel.id === this.VoiceCategoryId)
-        const permissions = parent.permissionOverwrites.map(({
-            allow, allowed, channel, id, denied, deny, type
-        }) => ({
-            allow, allowed, channel, id, denied, deny, type
-        }))
+        const permissions = this.mapPermissions(parent.permissionOverwrites)
+
     
         const channel = await guild.createChannel(name, 'voice', permissions, 'Created using Aidyn');
 
