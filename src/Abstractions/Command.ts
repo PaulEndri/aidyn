@@ -8,6 +8,7 @@ import Commands from '../Database/Models/Commands';
  */
 
 abstract class Command implements ICommand {
+    public AllowedGuilds    : string[];
     public AllowedChannels  : string[];
     public AllowedRoles     : string[];
     public AllowedUsers     : string[];
@@ -108,7 +109,9 @@ abstract class Command implements ICommand {
     }
 
     public Call(message: Message): Promise<any> {
-    
+        if (this.AllowedGuilds && this.AllowedGuilds.length > 0 && !this.AllowedGuilds.includes(message.guild.id)) {
+            console.warn('[Failed Guild Permission]', message.member.displayName, message.guild.id, message.content);
+        }
         if (!this.ValidateRoles(message.member.roles) || !this.ValidateChannel(message.channel.id)) {
             console.warn('[Failed Permission]', message.member.displayName, message.channel.id, message.content);
 
@@ -120,6 +123,7 @@ abstract class Command implements ICommand {
             .then(() => this.Save());
     }
 
+    // @ts-ignore
     public ContextInjection(context?: any) {
         return {}
     }
@@ -167,6 +171,7 @@ abstract class Command implements ICommand {
         return results;
 
     }
+
     public GetContext(message: Message, parameterized = false): any {
         let results: any;
 

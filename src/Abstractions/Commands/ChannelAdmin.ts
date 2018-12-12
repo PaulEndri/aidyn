@@ -1,5 +1,5 @@
 import Command from '../Command';
-import { Message, Guild, GuildChannel } from 'discord.js';
+import { Message, Guild, GuildChannel, PermissionOverwrites, Collection } from 'discord.js';
 
 abstract class ChannelAdmin extends Command {
     static NAME           = 'ChannelAdmin';
@@ -52,11 +52,7 @@ abstract class ChannelAdmin extends Command {
 
     private async CreateTextChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel> {
         const parent      = guild.channels.find((_channel) => _channel.id === this.TextCategoryId)
-        const permissions = parent.permissionOverwrites.map(({
-            allow, allowed, channel, id, denied, deny, type
-        }) => ({
-            allow, allowed, channel, id, denied, deny, type
-        }))
+        const permissions = this.mapPermissions(parent.permissionOverwrites)
 
         const channel = await guild.createChannel(name, 'text', permissions, 'Created using Aidyn');
 
@@ -65,6 +61,14 @@ abstract class ChannelAdmin extends Command {
         }
 
         return channel.setParent(this.TextCategoryId);
+    }
+
+    private mapPermissions(permissions: Collection<string, PermissionOverwrites>): any {
+        return permissions.map(({
+            allow, allowed, channel, id, denied, deny, type
+        }) => ({
+            allow, allowed, channel, id, denied, deny, type
+        }))
     }
 
     private async RunDelete(message: Message, guild: Guild, channel: string): Promise<any> {

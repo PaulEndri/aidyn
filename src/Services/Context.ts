@@ -7,9 +7,9 @@ import State from '../Models/State';
 import { Client } from 'discord.js';
 
 export default class Context implements IContext {
-    Client  : Client;
-    Loading : boolean;
-    State   : IState;
+    public Client  : Client;
+    public Loading : boolean;
+    public State   : IState;
 
     constructor(client: Client) {
         this.Loading = true;

@@ -16,12 +16,12 @@ const EMPTY_COMMAND = {
 export default class Processor implements IProcessor {
     static DELAY_TIMER = 300;
 
-    Commands: CommandList;
-    Context : Context;
-    DbInUse : boolean;
-    Loaded  : boolean;
-    Logging : number;
-    Prefix  : string;
+    public Commands: CommandList;
+    public Context : Context;
+    public DbInUse : boolean;
+    public Loaded  : boolean;
+    public Logging : number;
+    public Prefix  : string;
 
     constructor(context: Context, prefix = '!', logging = 0) {
         this.Context  = context;
