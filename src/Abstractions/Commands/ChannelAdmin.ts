@@ -25,7 +25,7 @@ abstract class ChannelAdmin extends Command {
         }
     }
 
-    private async CreateVoiceChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel> {
+    public async CreateVoiceChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel> {
         const parent      = guild.channels.find((_channel) => _channel.id === this.VoiceCategoryId)
         const permissions = this.mapPermissions(parent.permissionOverwrites)
 
@@ -39,7 +39,7 @@ abstract class ChannelAdmin extends Command {
         return channel.setParent(this.VoiceCategoryId);
     }
 
-    private async CreateTextChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel> {
+    public async CreateTextChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel> {
         const parent      = guild.channels.find((_channel) => _channel.id === this.TextCategoryId)
         const permissions = this.mapPermissions(parent.permissionOverwrites)
 
