@@ -1,6 +1,6 @@
 {
   "name": "aidyn",
-  "version": "0.2.19",
+  "version": "0.2.21",
   "description": "Aidyn: Discord Bot Framework",
   "homepage": "https://github.com/PaulEndri/aidyn#readme",
   "main": "dist/index.js",

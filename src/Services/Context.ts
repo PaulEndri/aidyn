@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import Users from '../Database/Models/Users';
 import Commands from '../Database/Models/Commands';
 import State from '../Models/State';
-import { Client } from 'discord.js';
+import { Client as DiscordClient} from 'discord.js';
 import ICommandList from "../Interfaces/ICommandList";
 import CommandList from "../Models/CommandList";
 
@@ -16,14 +16,14 @@ const EMPTY_COMMAND = {
 };
 
 export default class Context implements IContext {
-    public Client         : Client;
+    public Client         : DiscordClient;
     public Loading        : boolean;
     public State          : IState;
     public UseDb          : boolean;
     public LoadedCommands : CommandList;
     public Owner          : string;
 
-    constructor(client: Client, owner: string) {
+    constructor(client: DiscordClient, owner: string) {
         this.Loading = true;
         this.Client  = client;
         this.Owner   = owner;
