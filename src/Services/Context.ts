@@ -21,10 +21,12 @@ export default class Context implements IContext {
     public State          : IState;
     public UseDb          : boolean;
     public LoadedCommands : CommandList;
+    public Owner          : string;
 
-    constructor(client: Client) {
+    constructor(client: Client, owner: string) {
         this.Loading = true;
         this.Client  = client;
+        this.Owner   = owner;
     }
 
     public Initialize(dbString?: string): Promise<any> {

@@ -6,5 +6,5 @@ export default interface IConfig {
     Logging?:          number,
     Prefix?:           string,
     CustomProcessor?:  Processor,
-    Owner:             string
+    Owner?:            string
 };

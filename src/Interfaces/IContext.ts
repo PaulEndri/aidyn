@@ -6,6 +6,7 @@ export default interface IContext {
     Client         : Client;
     Loading        : boolean;
     State          : IState;
+    Owner          : string;
     UseDb          : boolean;
     LoadedCommands : ICommandList
 }

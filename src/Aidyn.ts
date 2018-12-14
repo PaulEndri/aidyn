@@ -20,7 +20,7 @@ export default class Aidyn {
 
         this.Client           = new Client();
         this.Loaded           = false;
-        this.Context          = new Context(this.Client);
+        this.Context          = new Context(this.Client, Owner);
         this.BotToken         = BotToken;
         this.Processor        = CustomProcessor || new Processor(this.Context, Prefix, Owner, Logging);;
         this.ConnectionString = ConnectionString;
