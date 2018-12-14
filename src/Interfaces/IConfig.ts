@@ -5,5 +5,6 @@ export default interface IConfig {
     ConnectionString?: string,
     Logging?:          number,
     Prefix?:           string,
-    CustomProcessor?:  Processor
+    CustomProcessor?:  Processor,
+    Owner:             string
 };

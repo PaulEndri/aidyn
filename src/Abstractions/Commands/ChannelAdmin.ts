@@ -7,13 +7,6 @@ abstract class ChannelAdmin extends Command {
     static VOICE_CATEGORY = '';
     static TEXT_CATEGORY  = '';
 
-    public Name(): string { 
-        return Object.getPrototypeOf(this).constructor.NAME;
-    }
-    public Namespace(): string { 
-        return Object.getPrototypeOf(this).constructor.NAMESPACE;
-    }
-
     public get TextCategoryId(): string {
         return Object.getPrototypeOf(this).constructor.TEXT_CATEGORY;
     }

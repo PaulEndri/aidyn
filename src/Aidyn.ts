@@ -16,26 +16,29 @@ export default class Aidyn {
     public Context:           Context;
 
     constructor(config?: IConfig) {
-        const {BotToken, ConnectionString, Prefix, Logging, CustomProcessor} = config
+        const {BotToken, ConnectionString, Prefix, Logging, CustomProcessor, Owner} = config
 
         this.Client           = new Client();
         this.Loaded           = false;
         this.Context          = new Context(this.Client);
         this.BotToken         = BotToken;
-        this.Processor        = CustomProcessor || new Processor(this.Context, Prefix, Logging);;
+        this.Processor        = CustomProcessor || new Processor(this.Context, Prefix, Owner, Logging);;
         this.ConnectionString = ConnectionString;
     }
 
     public async LoadCommands(commands: any): Promise<any> {
-        const useDB   = await this.Context.Initialize(this.ConnectionString);
-        const results = await this.Processor.LoadCommands(commands, useDB);
+        if (this.Context.Loading !== false) {
+            await this.Context.Initialize(this.ConnectionString);
+        }
+
+        const results = await this.Context.LoadCommands(commands);
 
         this.Loaded = true;
 
         return results;
     }
 
-    public async Start(commands?: any): Promise<any> {
+    public async Start(commands?: any): Promise<Aidyn> {
         if (this.Loaded === false && !commands) {
             throw new Error("[FAILURE] No Commands Loaded!");
         } else if(this.Loaded === false && commands) {
@@ -46,13 +49,15 @@ export default class Aidyn {
 
         Client.on('message', (m) => Processor.Handle(m));
 
-        return Client
+        await Client
             .login(BotToken || process.env.BOT_TOKEN)
             .then((token) => {
                 console.log('[SUCCESS] Bot Online');
                 
                 return token;
             });
+
+        return this;
     }
 
     public async Stop(): Promise<any> {

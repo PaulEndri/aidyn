@@ -5,11 +5,22 @@ import Users from '../Database/Models/Users';
 import Commands from '../Database/Models/Commands';
 import State from '../Models/State';
 import { Client } from 'discord.js';
+import ICommandList from "../Interfaces/ICommandList";
+import CommandList from "../Models/CommandList";
+
+const EMPTY_COMMAND = {
+    AllowedChannels: [],
+    AllowedRoles   : [],
+    AllowedUsers   : [],
+    Data           : {}
+};
 
 export default class Context implements IContext {
-    public Client  : Client;
-    public Loading : boolean;
-    public State   : IState;
+    public Client         : Client;
+    public Loading        : boolean;
+    public State          : IState;
+    public UseDb          : boolean;
+    public LoadedCommands : CommandList;
 
     constructor(client: Client) {
         this.Loading = true;
@@ -21,6 +32,7 @@ export default class Context implements IContext {
 
         if (!conString || conString.length === 0) {
             this.Loading = false;
+            this.UseDb   = false;
             console.log('[MISS] No Datbase provided');
             return Promise.resolve(false);
         }
@@ -43,6 +55,7 @@ export default class Context implements IContext {
 
                 this.State   = new State(commandsState, usersState);
                 this.Loading = false;
+                this.UseDb   = true;
 
                 return this.Loading;
             })
@@ -56,7 +69,64 @@ export default class Context implements IContext {
             })
     }
     
-    public async Save() {
+    private async LoadCommandsLocal(Commands: any): Promise<ICommandList> {
+        const data = new CommandList();
+
+        Object.keys(Commands).forEach((key: string) => {
+            const {AllowedChannels, AllowedRoles, AllowedUsers} = EMPTY_COMMAND;  
+
+            if (!Commands[key].NAMESPACE || !Commands[key].NAME) {
+                console.log(`[ERROR] Failed to load ${key} because it lacks a NAME and/or NAMESPACE property`);
+                return;
+            }
+
+            data[key.toLowerCase()]            = new Commands[key](AllowedChannels, AllowedRoles, AllowedUsers, false);
+            data[key.toLowerCase()].BotContext = this;
+
+            console.log('[SUCCESS] Loaded Command', key);
+        })
+
+        return data;
+    }
+
+    private async LoadCommandsFromDatabase(Commands: any): Promise<ICommandList> {
+        const data             = new CommandList();
+        const databaseCommands = this.State.Commands;
+
+        Object.keys(Commands).forEach((key: string) => {
+            const commandData = databaseCommands[key] || {...EMPTY_COMMAND, Namespace: key};
+
+            const {AllowedChannels, AllowedRoles, AllowedUsers, Data} = commandData;  
+
+            if (!Commands[key].NAMESPACE || !Commands[key].NAME) {
+                console.log(`[ERROR] Failed to load ${key} because it lacks a NAME and/or NAMESPACE property`);
+                return;
+            }
+
+            data[key.toLowerCase()]            = new Commands[key](AllowedChannels, AllowedRoles, AllowedUsers, true);
+            data[key.toLowerCase()].Data       = Data;
+            data[key.toLowerCase()].BotContext = this;
+
+            console.log('[SUCCESS] Loaded Command', key);
+        })
+
+        return data;
+    }
+
+    public async LoadCommands(Commands: any): Promise<ICommandList> {
+        if (this.Loading === true) {
+            const deferred = new Promise((resolve) => setTimeout(resolve, 300));
+
+            await deferred;
+        }
+
+        if (this.UseDb) {
+            this.LoadedCommands = await this.LoadCommandsFromDatabase(Commands);
+        } else {
+            this.LoadedCommands = await this.LoadCommandsLocal(Commands);
+        }
+
         
+        return this.LoadedCommands;
     }
 }

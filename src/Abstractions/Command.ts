@@ -1,6 +1,7 @@
 import ICommand from '../Interfaces/ICommand';
 import { Message, Collection } from 'discord.js';
 import Commands from '../Database/Models/Commands';
+import IContext from '../Interfaces/IContext';
 
 /**
  * @module Command
@@ -15,8 +16,11 @@ abstract class Command implements ICommand {
     public Data             : any;
     public RequiresDatabase : boolean;
     public Signature        : string;
+    public BotContext       : IContext;
     private Modified        : boolean;
-
+    public CooldownRate     : number;
+    public LastRun          : number;
+    
     public constructor(channels: string[], roles: string[], users: string[], dbRequired = false) {
         this.AllowedChannels  = channels;
         this.AllowedRoles     = roles;
@@ -39,8 +43,14 @@ abstract class Command implements ICommand {
     }
 
     abstract Run(message: Message): Promise<any>;
-    abstract Name(): string;
-    abstract Namespace(): string;
+
+    public Name(): string {
+        return Object.getPrototypeOf(this).constructor.NAME;
+    }
+
+    public Namespace(): string {
+        return Object.getPrototypeOf(this).constructor.NAMESPACE;
+    }
 
     private HasLocalField(name: string): boolean {
         return this.HasLocalData && !!this.LocalData[name];
@@ -108,19 +118,49 @@ abstract class Command implements ICommand {
         return this.ModifyPermissions('User', 'add', user, local);
     }
 
-    public Call(message: Message): Promise<any> {
-        if (this.AllowedGuilds && this.AllowedGuilds.length > 0 && !this.AllowedGuilds.includes(message.guild.id)) {
-            console.warn('[Failed Guild Permission]', message.member.displayName, message.guild.id, message.content);
-        }
-        if (!this.ValidateRoles(message.member.roles) || !this.ValidateChannel(message.channel.id)) {
-            console.warn('[Failed Permission]', message.member.displayName, message.channel.id, message.content);
+    public Call(message: Message, isOwner: boolean): Promise<any> {
+        if (!isOwner) {
+            if (this.AllowedGuilds && this.AllowedGuilds.length > 0 && !this.AllowedGuilds.includes(message.guild.id)) {
+                console.warn('[Failed Guild Permission]', message.member.displayName, message.guild.id, message.content);
+            }
 
-            return Promise.resolve('');
+            if (!this.ValidateRoles(message.member.roles) || !this.ValidateChannel(message.channel.id)) {
+                console.warn('[Failed Permission]', message.member.displayName, message.channel.id, message.content);
+
+                message.channel.send(`I'm afraid I can't let you do that, ${message.member.displayName}`);
+    
+                return Promise.resolve('');
+            }
+
+            const isOnCooldown = this.CheckCooldown();
+
+            if (isOnCooldown) {
+                message.channel.send('This command is still on cooldown, please wait.');
+            }
         }
 
         return this
             .Run(message)
             .then(() => this.Save());
+    }
+
+    /**
+     * Returns false if command is on cooldown
+     */
+    public CheckCooldown(): boolean {
+        if (this.CooldownRate && this.CooldownRate !== 0) {
+            const timestamp = new Date().getTime()
+
+            if (!this.LastRun || (timestamp - this.LastRun >= this.CooldownRate)) {
+                this.LastRun = timestamp;
+
+                return false
+            }
+
+            return true
+        }
+
+        return false;
     }
 
     // @ts-ignore

@@ -11,13 +11,6 @@ class TestCommand extends Command {
 
     public Signature = 'test command';
 
-    public Name(): string { 
-        return TestCommand.NAME;
-    }
-    public Namespace(): string { 
-        return 'TestCommand';
-    }
-
     public async Run(message: Message): Promise<any> {
        return message.channel.send(TestCommand.TEST_OUTPUT);
     }

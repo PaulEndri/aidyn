@@ -7,13 +7,6 @@ abstract class RoleAdmin extends Command {
     static ROLE      = '';
     static ROLES     = [''];
 
-    public Name(): string { 
-        return Object.getPrototypeOf(this).constructor.NAME;
-    }
-    public Namespace(): string { 
-        return Object.getPrototypeOf(this).constructor.NAMESPACE;
-    }
-
     public constructor(channels: string[], roles: string[], users: string[], dbRequired = false) {
         super(channels, roles, users, dbRequired);
 
