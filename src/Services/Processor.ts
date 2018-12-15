@@ -45,7 +45,7 @@ export default class Processor implements IProcessor {
         try {
             let result;
 
-            if (this.Context.Loading === true || this.Loaded === false) {
+            if (this.Context.Loading === true) {
                 console.log('[WARNING] Message Received before Data is loaded, delaying');
                 setTimeout(() => this.Handle(message), Processor.DELAY_TIMER);
 
