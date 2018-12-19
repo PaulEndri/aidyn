@@ -21,4 +21,3 @@ exports.CommandsSchema
 });
 const Commands = mongoose_1.model("Commands", exports.CommandsSchema);
 exports.default = Commands;
-//# sourceMappingURL=Commands.js.map

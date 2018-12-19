@@ -7,4 +7,3 @@ export default interface IConfig {
     CustomProcessor?: Processor;
     Owner?: string;
 }
-//# sourceMappingURL=IConfig.d.ts.map

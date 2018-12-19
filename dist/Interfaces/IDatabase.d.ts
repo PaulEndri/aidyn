@@ -3,4 +3,3 @@ export default interface IDatabase {
     connection: any;
     models: Array<any>;
 }
-//# sourceMappingURL=IDatabase.d.ts.map

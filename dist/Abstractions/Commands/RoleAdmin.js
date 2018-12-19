@@ -53,4 +53,3 @@ RoleAdmin.NAMESPACE = 'RoleAdmin';
 RoleAdmin.ROLE = '';
 RoleAdmin.ROLES = [''];
 exports.default = RoleAdmin;
-//# sourceMappingURL=RoleAdmin.js.map

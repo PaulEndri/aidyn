@@ -51,4 +51,3 @@ class Aidyn {
     }
 }
 exports.default = Aidyn;
-//# sourceMappingURL=Aidyn.js.map

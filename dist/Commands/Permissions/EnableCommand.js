@@ -25,4 +25,3 @@ class EnableCommand extends __1.Command {
 EnableCommand.NAME = 'enableCommand';
 EnableCommand.NAMESPACE = 'admin';
 exports.default = EnableCommand;
-//# sourceMappingURL=EnableCommand.js.map

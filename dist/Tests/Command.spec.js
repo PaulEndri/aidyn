@@ -25,4 +25,3 @@
 //         expect(test2).to.equal(TestCommand.TEST_OUTPUT);
 //     })
 // })
-//# sourceMappingURL=Command.spec.js.map

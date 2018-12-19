@@ -17,4 +17,3 @@ const Aidyn_1 = __importDefault(require("./Aidyn"));
 const Commands_2 = __importDefault(require("./Commands"));
 exports.Commands = Commands_2.default;
 exports.default = Aidyn_1.default;
-//# sourceMappingURL=index.js.map

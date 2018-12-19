@@ -6,4 +6,3 @@ export default interface ILogs {
     Success: boolean;
     Response: string;
 }
-//# sourceMappingURL=ILogs.d.ts.map

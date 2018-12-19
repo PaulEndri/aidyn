@@ -36,4 +36,3 @@ class ModifyPermissions extends __1.Command {
 ModifyPermissions.NAME = 'modifyPermissions';
 ModifyPermissions.NAMESPACE = 'admin';
 exports.default = ModifyPermissions;
-//# sourceMappingURL=ModifyPermissions.js.map

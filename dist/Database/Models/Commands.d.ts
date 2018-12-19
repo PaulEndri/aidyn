@@ -5,4 +5,3 @@ export interface ICommandsModel extends ICommands, Document {
 export declare const CommandsSchema: Schema;
 declare const Commands: Model<ICommandsModel>;
 export default Commands;
-//# sourceMappingURL=Commands.d.ts.map

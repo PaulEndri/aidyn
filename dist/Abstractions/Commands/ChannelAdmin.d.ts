@@ -21,4 +21,3 @@ declare abstract class ChannelAdmin extends Command {
     Run(message: Message, args: any): Promise<any>;
 }
 export default ChannelAdmin;
-//# sourceMappingURL=ChannelAdmin.d.ts.map

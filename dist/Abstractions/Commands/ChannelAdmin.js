@@ -100,4 +100,3 @@ ChannelAdmin.NAMESPACE = 'ChannelAdmin';
 ChannelAdmin.VOICE_CATEGORY = '';
 ChannelAdmin.TEXT_CATEGORY = '';
 exports.default = ChannelAdmin;
-//# sourceMappingURL=ChannelAdmin.js.map

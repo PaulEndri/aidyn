@@ -8,4 +8,3 @@ class State {
 }
 exports.default = State;
 ;
-//# sourceMappingURL=State.js.map

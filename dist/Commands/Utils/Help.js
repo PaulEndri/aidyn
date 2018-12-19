@@ -51,4 +51,3 @@ class Help extends __1.Command {
 Help.NAME = 'help';
 Help.NAMESPACE = 'util';
 exports.default = Help;
-//# sourceMappingURL=Help.js.map

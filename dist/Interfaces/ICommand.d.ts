@@ -17,4 +17,3 @@ export default interface ICommand {
     Disabled: boolean;
     Arguments: ICommandArgument[];
 }
-//# sourceMappingURL=ICommand.d.ts.map

@@ -18,4 +18,3 @@ UsersSchema
 });
 const Users = mongoose_1.model("Users", UsersSchema);
 exports.default = Users;
-//# sourceMappingURL=Users.js.map

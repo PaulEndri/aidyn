@@ -12,4 +12,3 @@ declare class DisableCommand extends Command {
     Run(message: Message, args: any): Promise<Message | Message[]>;
 }
 export default DisableCommand;
-//# sourceMappingURL=DisableCommand.d.ts.map

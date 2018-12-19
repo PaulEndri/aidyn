@@ -220,4 +220,3 @@ class Command {
     }
 }
 exports.default = Command;
-//# sourceMappingURL=Command.js.map

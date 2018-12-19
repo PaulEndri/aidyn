@@ -24,4 +24,3 @@
 //         return aidyn.Stop();
 //     })
 // })
-//# sourceMappingURL=Aidyn.spec.js.map

@@ -17,4 +17,3 @@ declare abstract class RoleAdmin extends Command {
     Run(message: Message, args: any): Promise<any>;
 }
 export default RoleAdmin;
-//# sourceMappingURL=RoleAdmin.d.ts.map

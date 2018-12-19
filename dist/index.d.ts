@@ -7,4 +7,3 @@ import Aidyn from './Aidyn';
 import Commands from './Commands';
 export { RoleAdmin, ChannelAdmin, Processor, Command, CommandsSchema, Commands };
 export default Aidyn;
-//# sourceMappingURL=index.d.ts.map

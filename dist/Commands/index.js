@@ -13,4 +13,3 @@ exports.default = {
     [ModifyPermissions_1.default.NAME]: ModifyPermissions_1.default,
     [Help_1.default.NAME]: Help_1.default
 };
-//# sourceMappingURL=index.js.map

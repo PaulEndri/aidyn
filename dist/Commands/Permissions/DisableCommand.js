@@ -25,4 +25,3 @@ class DisableCommand extends __1.Command {
 DisableCommand.NAME = 'disableCommand';
 DisableCommand.NAMESPACE = 'admin';
 exports.default = DisableCommand;
-//# sourceMappingURL=DisableCommand.js.map

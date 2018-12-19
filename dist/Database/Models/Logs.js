@@ -22,4 +22,3 @@ LogsSchema
 });
 const Logs = mongoose_1.model("Logs", LogsSchema);
 exports.default = Logs;
-//# sourceMappingURL=Logs.js.map
