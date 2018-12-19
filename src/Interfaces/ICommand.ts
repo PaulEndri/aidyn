@@ -1,5 +1,6 @@
 import {Message} from 'discord.js';
 import IContext from './IContext';
+import ICommandArgument from './ICommandArgument';
 
 export default interface ICommand {    
     AllowedChannels  : string[];
@@ -9,7 +10,11 @@ export default interface ICommand {
     Data             : {};
     CooldownRate     : number;
     RequiresDatabase : boolean;
-    Run              : (message: Message) => Promise<any>;
-    Signature        : string;
+    Run              : (message: Message, args?: any) => Promise<any>;
+    Blurb            : string;
     BotContext       : IContext;
+    Parametrized     : boolean;
+    LastRun          : number;
+    Disabled         : boolean;
+    Arguments        : ICommandArgument[];
 }

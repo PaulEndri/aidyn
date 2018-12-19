@@ -61,10 +61,14 @@ export default class Processor implements IProcessor {
 
             if (isValid) {
                 logs.Command  = name.toLowerCase();
-
-                result = await this.Context.LoadedCommands[name.toLowerCase()].Call(message, message.author.id === this.Owner);
+                const command = this.Context.LoadedCommands[name.toLowerCase()];
+                const isOwner = message.author.id !== this.Context.Owner
+                if (command.Disabled && !isOwner) {
+                    result = await message.channel.send('This command has been disabled, please contact the bot owner to enable it');
+                } else {
+                    result = await command.Call(message, isOwner);
+                }
             }
-
 
             logs.Runtime = new Date().getTime() - start;
             logs.Success = true;

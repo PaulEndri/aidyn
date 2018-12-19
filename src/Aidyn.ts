@@ -24,6 +24,7 @@ export default class Aidyn {
         this.BotToken         = BotToken;
         this.Processor        = CustomProcessor || new Processor(this.Context, Prefix, Owner, Logging);;
         this.ConnectionString = ConnectionString;
+        this.Context.Prefix   = Prefix;
     }
 
     public async LoadCommands(commands: any): Promise<any> {

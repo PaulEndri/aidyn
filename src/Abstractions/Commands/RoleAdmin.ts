@@ -7,6 +7,13 @@ abstract class RoleAdmin extends Command {
     static ROLE      = '';
     static ROLES     = [''];
 
+    public Parametrized = true;
+    public Arguments    = [
+        { name: 'add', type: 'boolean', text: 'Is a user being added to the role?' },
+        { name: 'remove', type: 'boolean', text: 'Is a user being removed from the role?'},
+        { name: 'user', type: '@user', text: 'User being modified' }
+    ]
+
     public constructor(channels: string[], roles: string[], users: string[], dbRequired = false) {
         super(channels, roles, users, dbRequired);
 
@@ -37,9 +44,8 @@ abstract class RoleAdmin extends Command {
         }
     }
 
-    public async Run(message: Message): Promise<any> {
-        const context             = this.GetContext(message, true);
-        const {add, remove, user} = context
+    public async Run(message: Message, args: any): Promise<any> {
+        const {add, remove, user} = args
 
         if (add && !remove) {
             await this.AddDiscordRole(message, user);

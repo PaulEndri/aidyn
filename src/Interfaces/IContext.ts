@@ -8,5 +8,6 @@ export default interface IContext {
     State          : IState;
     Owner          : string;
     UseDb          : boolean;
-    LoadedCommands : ICommandList
+    LoadedCommands : ICommandList;
+    Prefix         : String;
 }

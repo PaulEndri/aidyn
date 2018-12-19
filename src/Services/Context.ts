@@ -21,6 +21,7 @@ export default class Context implements IContext {
     public State          : IState;
     public UseDb          : boolean;
     public LoadedCommands : CommandList;
+    public Prefix         : string;
     public Owner          : string;
 
     constructor(client: DiscordClient, owner: string) {

@@ -6,6 +6,15 @@ abstract class ChannelAdmin extends Command {
     static NAMESPACE      = 'ChannelAdmin';
     static VOICE_CATEGORY = '';
     static TEXT_CATEGORY  = '';
+    public Parametrized   = true;
+    public Arguments      = [
+         { name: 'name', type: 'string', text: 'Name Of Channel'},
+        { name: 'text', type: 'boolean', text: 'Is the channel a text channel?'},
+        { name: 'topic', type: 'string', text: 'Channel Topic'},
+        { name: 'remove', type: 'boolean', text: 'Is the channel being removed'},
+        { name: 'voice', type: 'boolean', text: 'Is the channel a voice channel?'},
+        { name: 'channel', type: '*', text: 'Name or tag of channel being removed'}
+    ];
 
     public get TextCategoryId(): string {
         return Object.getPrototypeOf(this).constructor.TEXT_CATEGORY;
@@ -85,8 +94,7 @@ abstract class ChannelAdmin extends Command {
         return message.channel.send(`Unable to delete ${channel}`);
     }
 
-    public async Run(message: Message): Promise<any> {
-        const context = this.GetContext(message, true);
+    public async Run(message: Message, args: any): Promise<any> {
         const {
             text,
             voice,
@@ -94,7 +102,7 @@ abstract class ChannelAdmin extends Command {
             name,
             remove,
             channel
-        } = context;
+        } = args;
 
 
         if (remove !== undefined) {

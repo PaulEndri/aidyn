@@ -2,6 +2,7 @@ import ICommand from '../Interfaces/ICommand';
 import { Message, Collection } from 'discord.js';
 import Commands from '../Database/Models/Commands';
 import IContext from '../Interfaces/IContext';
+import ICommandArgument from '../Interfaces/ICommandArgument';
 
 /**
  * @module Command
@@ -15,12 +16,15 @@ abstract class Command implements ICommand {
     public AllowedUsers     : string[];
     public Data             : any;
     public RequiresDatabase : boolean;
-    public Signature        : string;
+    public Blurb            : string;
     public BotContext       : IContext;
-    private Modified        : boolean;
     public CooldownRate     : number;
     public LastRun          : number;
-    
+    public Arguments        : ICommandArgument[];
+    public Parametrized     : boolean;
+    public Disabled         : boolean;
+    private Modified        : boolean;
+
     public constructor(channels: string[], roles: string[], users: string[], dbRequired = false) {
         this.AllowedChannels  = channels;
         this.AllowedRoles     = roles;
@@ -42,7 +46,7 @@ abstract class Command implements ICommand {
         return !!this.Data[this.Name()];
     }
 
-    abstract Run(message: Message): Promise<any>;
+    abstract Run(message: Message, args?: any): Promise<any>;
 
     public Name(): string {
         return Object.getPrototypeOf(this).constructor.NAME;
@@ -84,7 +88,7 @@ abstract class Command implements ICommand {
         }
     }
 
-    private ModifyPermissions(type: string, action: string, key: string, local = false) {
+    public ModifyPermissions(type: string, action: string, key: string, local = false) {
         const permissionKey = `Allowed${type}s`;
 
         if (!local) {
@@ -140,7 +144,7 @@ abstract class Command implements ICommand {
         }
 
         return this
-            .Run(message)
+            .Run(message, this.GetArguments(message))
             .then(() => this.Save());
     }
 
@@ -168,9 +172,25 @@ abstract class Command implements ICommand {
         return {}
     }
 
-    private GetParameterizedContext(content: string) {
-        const parts   = content.split('--');
-        const results = { args: []};
+    public GetArguments(message: Message): any {
+        const args = this.Arguments;
+
+        if (!args || args) {
+            return null;
+        }
+
+        if (this.Parametrized === true) {
+            return this.GetParameterizedArguments(message.content);
+        } else {
+            return this.GetGenericArguments(message.content)
+        }
+    }
+
+    private GetParameterizedArguments(content: string) {
+        const parts   = content.split('--').slice(1);
+        const results = {};
+        const values  = {};
+        const args    = this.Arguments;
 
         parts.forEach((part) => {
             const words = part.split(' ');
@@ -179,54 +199,44 @@ abstract class Command implements ICommand {
                 const keys = words[0].split('=');
 
                 if (words.length === 1) {
-                    results[keys[0]] = keys[1];
+                    values[keys[0]] = keys[1];
                 } else {
                     const key   = keys[0];
                     const value = [keys[1], ...words.slice(1)];
 
-                    results[key] = value.join(' ');
+                    values[key] = value.join(' ');
                 }
             } else {
-                results[words[0]] = words.slice(1).join(' ')
+                values[words[0]] = words.slice(1).join(' ')
             }
         });
 
+        args.forEach((argument: ICommandArgument) => {
+            if (values[argument.name]) {
+                results[argument.name] = values[argument.name];
+            }
+
+            if (argument.alias && values[argument.alias]) {
+                results[argument.name] = values[argument.alias]
+            }
+        })
+    
         return results;
     }
 
-    private GetGenericContext(content: string) {
-        const parts   = content.split(' ');
+    private GetGenericArguments(content: string) {
+        const parts   = content.split(' ').slice(1);
+        const args    = this.Arguments;
         const results = {args: []};
 
-        parts.forEach((part: string) => {
-            if (part.indexOf('--') === 0) {
-                const param = part.split('=');
 
-                results[param[0].replace('--', '')] = param[1] || true;
-            } else {
-                results.args.push(part);
+        args.forEach((argument: ICommandArgument, index: number) => {
+            if (parts[index]) {
+                results[argument.name] = parts[index]
             }
-        });
+        })
 
         return results;
-
-    }
-
-    public GetContext(message: Message, parameterized = false): any {
-        let results: any;
-
-        if (parameterized === true) {
-            results = this.GetParameterizedContext(message.content);
-        } else {
-            results = this.GetGenericContext(message.content);
-        }
-
-        if (results.args.length < 2) {
-            results.args.push('');
-            results.args.push('');
-        }
-
-        return {...results, ...this.ContextInjection(results)};
     }
 
     public RemoveAllowedChannel(channelId: string, local = true): void {
