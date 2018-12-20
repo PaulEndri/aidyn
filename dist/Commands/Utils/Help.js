@@ -25,7 +25,7 @@ class Help extends __1.Command {
     }
     // @ts-ignore 
     async Run(message, args) {
-        if (args.command) {
+        if (args && args.command) {
             return message.reply(this.RunForCommand(args.command));
         }
         const commands = Object.values(this.BotContext.LoadedCommands)
