@@ -61,7 +61,7 @@ class Command {
             if (action === 'add') {
                 this[permissionKey].push(key);
             }
-            else {
+            else if (this[permissionKey]) {
                 this[permissionKey] = this[permissionKey].filter(entry => key === entry);
             }
         }
@@ -69,7 +69,7 @@ class Command {
             if (action === 'add') {
                 this.LocalData[permissionKey].push(key);
             }
-            else {
+            else if (this.LocalData[permissionKey]) {
                 this.LocalData[permissionKey] = this.LocalData[permissionKey].filter(entry => key === entry);
             }
         }
@@ -151,11 +151,11 @@ class Command {
                 else {
                     const key = keys[0];
                     const value = [keys[1], ...words.slice(1)];
-                    values[key] = value.join(' ');
+                    values[key] = value.join(' ').trim();
                 }
             }
             else {
-                values[words[0]] = words.slice(1).join(' ');
+                values[words[0]] = words.slice(1).join(' ').trim();
             }
         });
         args.forEach((argument) => {
@@ -174,7 +174,7 @@ class Command {
         const results = { args: [] };
         args.forEach((argument, index) => {
             if (parts[index]) {
-                results[argument.name] = parts[index];
+                results[argument.name] = parts[index].trim();
             }
         });
         return results;
