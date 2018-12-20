@@ -103,7 +103,7 @@ class Command {
             }
         }
         return this
-            .Run(message, this.GetArguments(message))
+            .Run(message, Object.assign({}, this.GetArguments(message), this.ContextInjection))
             .then(() => this.Save());
     }
     /**

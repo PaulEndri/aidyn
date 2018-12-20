@@ -146,7 +146,7 @@ abstract class Command implements ICommand {
         }
 
         return this
-            .Run(message, this.GetArguments(message))
+            .Run(message, {...this.GetArguments(message), ...this.ContextInjection})
             .then(() => this.Save());
     }
 
