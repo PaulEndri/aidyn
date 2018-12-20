@@ -40,8 +40,7 @@ class Help extends Command {
             return message.reply(this.RunForCommand(args.command));
         }
 
-        // @ts-ignore
-        const commands = this.BotContext.LoadedCommands
+        const commands = Object.values(this.BotContext.LoadedCommands)
             .filter((cmd: Command) => {
                 const hasPermission = cmd.Validate(message);
             
