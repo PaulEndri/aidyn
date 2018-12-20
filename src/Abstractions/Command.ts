@@ -177,7 +177,7 @@ abstract class Command implements ICommand {
     public GetArguments(message: Message): any {
         const args = this.Arguments;
 
-        if (!args || args) {
+        if (!args || args.length === 0) {
             return null;
         }
 

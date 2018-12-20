@@ -126,7 +126,7 @@ class Command {
     }
     GetArguments(message) {
         const args = this.Arguments;
-        if (!args || args) {
+        if (!args || args.length === 0) {
             return null;
         }
         if (this.Parametrized === true) {
