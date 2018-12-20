@@ -294,8 +294,16 @@ abstract class Command implements ICommand {
     }
 
     public Validate(message: Message): boolean {
-        const validGuild = !this.AllowedGuilds || this.AllowedGuilds.length === 0 || this.AllowedGuilds.includes(message.guild.id);
-        return validGuild && this.ValidateRoles(message.member.roles) || this.ValidateUsers(message.member.id)
+        let hasPermission = true;
+        if (this.AllowedGuilds && this.AllowedGuilds.length > 0 && !this.AllowedGuilds.includes(message.guild.id)) {
+            hasPermission = false;
+        }
+
+        if (!this.ValidateRoles(message.member.roles) || !this.ValidateChannel(message.channel.id)) {
+            hasPermission = false;
+        }
+
+        return hasPermission;
     }
 }
 

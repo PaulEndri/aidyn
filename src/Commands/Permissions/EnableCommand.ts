@@ -13,7 +13,7 @@ class EnableCommand extends Command {
 
     public async Run(message: Message, args: any) {
         if (message.author.id !== this.BotContext.Owner && (!this.AllowedRoles || this.AllowedRoles.length === 0)) {
-            message.reply('[Permission Failure] This command is only available to owner');
+            message.channel.send('[Permission Failure] This command is only available to owner');
         }
 
         const {
@@ -23,12 +23,12 @@ class EnableCommand extends Command {
         const modifyingCommand = this.BotContext.LoadedCommands[command.toLowerCase()];
 
         if (!modifyingCommand) {
-            return message.reply(`[Error] Command ${command} not found`);
+            return message.channel.send(`[Error] Command ${command} not found`);
         }
         
         modifyingCommand.Disabled = false;
 
-        return message.reply(`[Success] Command ${command} has been enabled`);
+        return message.channel.send(`[Success] Command ${command} has been enabled`);
     }
 }
 

@@ -3,7 +3,6 @@ import { Message } from "discord.js";
 declare class Help extends Command {
     static NAME: string;
     static NAMESPACE: string;
-    Parametrized: boolean;
     Arguments: {
         name: string;
     }[];

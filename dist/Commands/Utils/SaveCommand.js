@@ -24,5 +24,5 @@ class SaveCommand extends __1.Command {
     }
 }
 SaveCommand.NAME = 'saveCommand';
-SaveCommand.NAMESPACE = 'utl';
+SaveCommand.NAMESPACE = 'util';
 exports.default = SaveCommand;

@@ -17,7 +17,7 @@ class ModifyPermissions extends Command {
 
     public async Run(message: Message, args: any) {
         if (message.author.id !== this.BotContext.Owner && (!this.AllowedRoles || this.AllowedRoles.length === 0)) {
-            message.reply('[Permission Failure] This command is only available to owner');
+            message.channel.send('[Permission Failure] This command is only available to owner');
         }
 
         const {
@@ -31,22 +31,22 @@ class ModifyPermissions extends Command {
         const modifyingCommand = this.BotContext.LoadedCommands[command.toLowerCase()];
 
         if (!modifyingCommand) {
-            return message.reply(`[Error] Command ${command} not found`);
+            return message.channel.send(`[Error] Command ${command} not found`);
         }
 
         if (add && remove) {
-            return message.reply('[Missing Parameter] Please only specify add OR remove');
+            return message.channel.send('[Missing Parameter] Please only specify add OR remove');
         }
 
         if (!'role|user|channel'.includes(type)) {
-            return message.reply('[Error] Type must be one of role, user, or channel');
+            return message.channel.send('[Error] Type must be one of role, user, or channel');
         }
 
         modifyingCommand.ModifyPermissions(type, add ? 'add' : 'remove', target.replace(/\D/g, ''))
 
         await modifyingCommand.Save();
 
-        return message.reply('[Success] Permissions updated and saved');
+        return message.channel.send('[Success] Permissions updated and saved');
     }
 }
 

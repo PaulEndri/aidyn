@@ -4,7 +4,6 @@ const __1 = require("../..");
 class Help extends __1.Command {
     constructor() {
         super(...arguments);
-        this.Parametrized = true;
         this.Arguments = [
             { name: 'command' }
         ];
@@ -35,11 +34,11 @@ class Help extends __1.Command {
             return cmd.Disabled !== true && hasPermission && cmd.Name() !== 'help';
         })
             .map((command) => {
-            let helpString = `${this.BotContext.Prefix}${command.Name()}`;
+            let helpString = `\n${this.BotContext.Prefix}${command.Name().toLowerCase()}`;
             if (command.Arguments && command.Arguments.length > 0) {
                 command.Arguments.forEach((arg) => {
                     const prefix = command.Parametrized ? '--' : '';
-                    helpString = helpString += ` ${prefix}${arg.name}=${arg.type || 'value'}`;
+                    helpString = helpString += `\n\t${prefix}${arg.name}=${arg.type || 'value'}`;
                 });
             }
             return helpString;
@@ -49,7 +48,7 @@ class Help extends __1.Command {
         }
         const msg = commands.join('\n');
         if (msg.length < 1900) {
-            return message.reply(`Type ${this.BotContext.Prefix}help --command=(command) for details about a specific command\n\`\`\`\n${msg}\`\`\``);
+            return message.reply(`Type ${this.BotContext.Prefix}help (command) for details about a specific command\n\`\`\`\n${msg}\`\`\``);
         }
         else {
             let activeIndex = 0;

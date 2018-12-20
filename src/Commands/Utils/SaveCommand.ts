@@ -3,7 +3,7 @@ import { Message } from "discord.js";
 
 class SaveCommand extends Command {
     static NAME      = 'saveCommand';
-    static NAMESPACE = 'utl';
+    static NAMESPACE = 'util';
 
     public Parametrized = true;
     public Blurb        = 'Command for bot owners and allowed users to save running bot data into a datbase if one has been configured';

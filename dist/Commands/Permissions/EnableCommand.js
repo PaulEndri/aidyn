@@ -12,15 +12,15 @@ class EnableCommand extends __1.Command {
     }
     async Run(message, args) {
         if (message.author.id !== this.BotContext.Owner && (!this.AllowedRoles || this.AllowedRoles.length === 0)) {
-            message.reply('[Permission Failure] This command is only available to owner');
+            message.channel.send('[Permission Failure] This command is only available to owner');
         }
         const { command } = args;
         const modifyingCommand = this.BotContext.LoadedCommands[command.toLowerCase()];
         if (!modifyingCommand) {
-            return message.reply(`[Error] Command ${command} not found`);
+            return message.channel.send(`[Error] Command ${command} not found`);
         }
         modifyingCommand.Disabled = false;
-        return message.reply(`[Success] Command ${command} has been enabled`);
+        return message.channel.send(`[Success] Command ${command} has been enabled`);
     }
 }
 EnableCommand.NAME = 'enableCommand';
