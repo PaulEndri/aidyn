@@ -6,6 +6,7 @@ class Help extends Command {
     static NAME      = 'help';
     static NAMESPACE = 'util';
 
+    public Parametrized = true;
     public Arguments    = [
         {name: 'command'}
     ]
@@ -51,7 +52,7 @@ class Help extends Command {
 
                 if (command.Arguments && command.Arguments.length > 0) {
                     command.Arguments.forEach((arg: ICommandArgument) => {
-                        const prefix = this.Parametrized ? '--' : '';
+                        const prefix = command.Parametrized ? '--' : '';
             
                         helpString = helpString += ` ${prefix}${arg.name}=${arg.type || 'value'}`
                     })
@@ -67,7 +68,7 @@ class Help extends Command {
         const msg = commands.join('\n');
 
         if (msg.length < 1900) {
-            return message.reply(`Type ${this.BotContext.Prefix}help (command) for details about a specific command\n\`\`\`\n${msg}\`\`\``);
+            return message.reply(`Type ${this.BotContext.Prefix}help --command=(command) for details about a specific command\n\`\`\`\n${msg}\`\`\``);
         } else {
             let activeIndex = 0;
             const messages  = [''];
