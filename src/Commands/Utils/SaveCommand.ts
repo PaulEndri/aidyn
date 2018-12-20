@@ -1,18 +1,18 @@
 import { Command } from "../..";
 import { Message } from "discord.js";
 
-class EnableCommand extends Command {
-    static NAME      = 'enableCommand';
-    static NAMESPACE = 'admin';
+class SaveCommand extends Command {
+    static NAME      = 'saveCommand';
+    static NAMESPACE = 'utl';
 
     public Parametrized = true;
-    public Blurb        = 'Command for bot owners and allowed users to enable commands';
+    public Blurb        = 'Command for bot owners and allowed users to save running bot data into a datbase if one has been configured';
     public Arguments    = [
         { name: 'command' },
     ];
 
     public async Run(message: Message, args: any) {
-        if (message.author.id !== this.BotContext.Owner && (!this.AllowedRoles || this.AllowedRoles.length === 0)) {
+        if (message.author.id !== this.BotContext.Owner) {
             message.reply('[Permission Failure] This command is only available to owner');
         }
 
@@ -26,10 +26,10 @@ class EnableCommand extends Command {
             return message.reply(`[Error] Command ${command} not found`);
         }
         
-        modifyingCommand.Disabled = false;
+        await modifyingCommand.Save(true);
 
-        return message.reply(`[Success] Command ${command} has been enabled`);
+        return message.reply(`[Updated] Command ${command} has been saved`);
     }
 }
 
-export default EnableCommand;
+export default SaveCommand;

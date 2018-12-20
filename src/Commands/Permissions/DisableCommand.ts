@@ -6,13 +6,14 @@ class DisableCommand extends Command {
     static NAMESPACE = 'admin';
 
     public Parametrized = true;
+    public Blurb        = 'Command for bot owners and allowed users to disable commands';
     public Arguments    = [
         { name: 'command', type:'string', text: 'Command type'},
     ];
 
     public async Run(message: Message, args: any) {
-        if (message.author.id !== this.BotContext.Owner) {
-            message.reply('This command is only available to owner');
+        if (message.author.id !== this.BotContext.Owner && (!this.AllowedRoles || this.AllowedRoles.length === 0)) {
+            message.reply('[PermissionFailure] This command is only available to bot owner');
         }
 
         const {
@@ -22,12 +23,12 @@ class DisableCommand extends Command {
         const modifyingCommand = this.BotContext.LoadedCommands[command.toLowerCase()];
 
         if (!modifyingCommand) {
-            return message.reply(`Command ${command} not found`);
+            return message.reply(`[Disable] Command ${command} not found`);
         }
         
         modifyingCommand.Disabled = true;
 
-        return message.reply(`Command ${command} has been disabled`);
+        return message.reply(`[Success] Command ${command} has been disabled`);
     }
 }
 

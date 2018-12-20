@@ -9,6 +9,7 @@ export const CommandsSchema: Schema = new Schema({
     AllowedRoles:    [Types.String],
     AllowedChannels: [Types.String],
     AllowedUsers:    [Types.String],
+    AllowedGuilds:   [Types.String],
     CreatedAt:       [Types.Date],
     Data:            Types.Mixed,
     Namespace:       Types.String

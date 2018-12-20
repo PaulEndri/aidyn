@@ -7,6 +7,8 @@ import State from '../Models/State';
 import { Client as DiscordClient} from 'discord.js';
 import ICommandList from "../Interfaces/ICommandList";
 import CommandList from "../Models/CommandList";
+import { GenerateRoleAdmin } from '../Abstractions/Commands/RoleAdmin';
+import ICustomRoleAdminData from '../Interfaces/ICustomRoleAdminData';
 
 const EMPTY_COMMAND = {
     AllowedChannels: [],
@@ -72,6 +74,38 @@ export default class Context implements IContext {
             })
     }
     
+    private async LoadCustomCommands(): Promise<any> {
+        const namespace = await Commands.findOne({Namespace: '__CUSTOM__'});
+        const commands  = namespace.Data;
+
+        Object.keys(commands).forEach((key) => {
+            const dbCommand = commands[key];
+            let command: any;
+
+            const {
+                Type,
+                AllowedChannels,
+                AllowedRoles,
+                AllowedUsers,
+                AllowedGuilds,
+                Data
+            } = dbCommand
+
+            switch (Type) {
+                case 'RoleAdmin':
+                    const roleData: ICustomRoleAdminData = Data;
+                    command = GenerateRoleAdmin(key, roleData.Lead, roleData.Role, AllowedGuilds[0]);
+                    break;
+                default:
+                    return;
+            }
+
+            if (command) {
+                this.LoadedCommands[key.toLowerCase()] = new command(AllowedChannels, AllowedRoles, AllowedUsers, true);
+            }
+        })
+    }
+
     private async LoadCommandsLocal(Commands: any): Promise<ICommandList> {
         const data = new CommandList();
 
@@ -116,7 +150,7 @@ export default class Context implements IContext {
         return data;
     }
 
-    public async LoadCommands(Commands: any): Promise<ICommandList> {
+    public async LoadCommands(Commands: any, loadCustomCommands = false): Promise<ICommandList> {
         if (this.Loading === true) {
             const deferred = new Promise((resolve) => setTimeout(resolve, 300));
 
@@ -129,7 +163,10 @@ export default class Context implements IContext {
             this.LoadedCommands = await this.LoadCommandsLocal(Commands);
         }
 
-        
+        if (loadCustomCommands) {
+            await this.LoadCustomCommands();
+        }
+
         return this.LoadedCommands;
     }
 }

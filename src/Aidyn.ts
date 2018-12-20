@@ -13,18 +13,28 @@ export default class Aidyn {
     private BotToken:         string;
     private Processor:        Processor;
     private Loaded:           boolean;
+    private ReloadCustoms:    boolean;
     public Context:           Context;
 
     constructor(config?: IConfig) {
-        const {BotToken, ConnectionString, Prefix, Logging, CustomProcessor, Owner} = config
+        const {
+            BotToken,
+            ConnectionString,
+            Prefix,
+            Logging,
+            CustomProcessor,
+            Owner,
+            ReloadCustoms
+        } = config
 
         this.Client           = new Client();
         this.Loaded           = false;
         this.Context          = new Context(this.Client, Owner);
         this.BotToken         = BotToken;
-        this.Processor        = CustomProcessor || new Processor(this.Context, Prefix, Owner, Logging);;
+        this.Processor        = CustomProcessor || new Processor(this.Context, Prefix, Owner, Logging);
         this.ConnectionString = ConnectionString;
         this.Context.Prefix   = Prefix;
+        this.ReloadCustoms    = ReloadCustoms;
     }
 
     public async LoadCommands(commands: any): Promise<any> {
@@ -32,7 +42,7 @@ export default class Aidyn {
             await this.Context.Initialize(this.ConnectionString);
         }
 
-        const results = await this.Context.LoadCommands(commands);
+        const results = await this.Context.LoadCommands(commands, this.ReloadCustoms);
 
         this.Loaded = true;
 

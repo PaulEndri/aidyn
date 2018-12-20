@@ -14,6 +14,7 @@ export default interface ICommand {
     Blurb            : string;
     BotContext       : IContext;
     Parametrized     : boolean;
+    Type             : string;
     LastRun          : number;
     Disabled         : boolean;
     Arguments        : ICommandArgument[];

@@ -23,6 +23,7 @@ abstract class Command implements ICommand {
     public Arguments        : ICommandArgument[];
     public Parametrized     : boolean;
     public Disabled         : boolean;
+    public Type             : string;
     private Modified        : boolean;
 
     public constructor(channels: string[], roles: string[], users: string[], dbRequired = false) {
@@ -131,7 +132,7 @@ abstract class Command implements ICommand {
             if (!this.ValidateRoles(message.member.roles) || !this.ValidateChannel(message.channel.id)) {
                 console.warn('[Failed Permission]', message.member.displayName, message.channel.id, message.content);
 
-                message.channel.send(`I'm afraid I can't let you do that, ${message.member.displayName}`);
+                message.channel.send(`[Permission Failure] I'm afraid I can't let you do that, ${message.member.displayName}`);
     
                 return Promise.resolve('');
             }
@@ -139,7 +140,7 @@ abstract class Command implements ICommand {
             const isOnCooldown = this.CheckCooldown();
 
             if (isOnCooldown) {
-                message.channel.send('This command is still on cooldown, please wait.');
+                message.channel.send('[Rate Warning] This command is still on cooldown, please wait.');
             }
         }
 
@@ -187,7 +188,7 @@ abstract class Command implements ICommand {
     }
 
     private GetParameterizedArguments(content: string) {
-        const parts   = content.split('--').slice(1);
+        const parts   = content.replace(/\u2014/g, '--').split('--').slice(1);
         const results = {};
         const values  = {};
         const args    = this.Arguments;
@@ -251,7 +252,7 @@ abstract class Command implements ICommand {
         return this.ModifyPermissions('User', 'remove', user, local);
     }
 
-    public async Save(): Promise<any> {
+    public async Save(force?: boolean): Promise<any> {
         if (this.RequiresDatabase === false) {
             return Promise.resolve();
         }
@@ -261,27 +262,32 @@ abstract class Command implements ICommand {
         if (!command) {
             command = new Commands({
                 Namespace:       this.Namespace(),
-                AllowedChannels: this.AllowedChannels,
-                AllowedRoles:    this.AllowedRoles,
-                AllowedUsers:    this.AllowedUsers,
+                AllowedChannels: [],
+                AllowedRoles:    [],
+                AllowedUsers:    [],
+                AllowedGuilds:   [],
                 Data:            {}
             })
         }
-        command.Data = {
-            ...(command.Data || {}),
-            ...this.Data,
-        };
 
-        if (this.Modified) {
-            if (!command.Data[this.Name()]) {
-                command.Data[this.Name()] = {};
-            }
-
+        if (this.Modified || force === true) {
+            // Overall all data for this command
             command.Data[this.Name()] = {
                 AllowedChannels : this.AllowedChannels,
                 AllowedRoles    : this.AllowedRoles,
-                AllowedUsers    : this.AllowedUsers
+                AllowedUsers    : this.AllowedUsers,
+                AllowedGuilds   : this.AllowedGuilds,
+                Type            : this.Type,
+                Data            : (this.Data[this.Name()] || {data: {}}).Data || {}
             };
+        }
+
+        // If namespace === name then this is the parent and should be synced as such
+        if (this.Namespace() === this.Name()) {
+            command.AllowedChannels = this.AllowedChannels;
+            command.AllowedRoles    = this.AllowedRoles;
+            command.AllowedUsers    = this.AllowedUsers;
+            command.AllowedGuilds   = this.AllowedGuilds;
         }
 
         return command.save();
