@@ -36,7 +36,7 @@ class Help extends Command {
     }
     // @ts-ignore 
     public async Run(message: Message, args: any) {
-        if (args.command) {
+        if (args && args.command) {
             return message.reply(this.RunForCommand(args.command));
         }
 
