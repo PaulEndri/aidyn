@@ -12,15 +12,15 @@ class SaveCommand extends __1.Command {
     }
     async Run(message, args) {
         if (message.author.id !== this.BotContext.Owner) {
-            message.reply('[Permission Failure] This command is only available to owner');
+            message.channel.send('[Permission Failure] This command is only available to owner');
         }
         const { command } = args;
         const modifyingCommand = this.BotContext.LoadedCommands[command.toLowerCase()];
         if (!modifyingCommand) {
-            return message.reply(`[Error] Command ${command} not found`);
+            return message.channel.send(`[Error] Command ${command} not found`);
         }
         await modifyingCommand.Save(true);
-        return message.reply(`[Updated] Command ${command} has been saved`);
+        return message.channel.send(`[Updated] Command ${command} has been saved`);
     }
 }
 SaveCommand.NAME = 'saveCommand';

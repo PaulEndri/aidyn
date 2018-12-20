@@ -224,7 +224,7 @@ class Command {
         return command.save();
     }
     Validate(message) {
-        const validGuild = !this.AllowedChannels || this.AllowedGuilds.length === 0 || this.AllowedGuilds.includes(message.guild.id);
+        const validGuild = !this.AllowedGuilds || this.AllowedGuilds.length === 0 || this.AllowedGuilds.includes(message.guild.id);
         return validGuild && this.ValidateRoles(message.member.roles) || this.ValidateUsers(message.member.id);
     }
 }
