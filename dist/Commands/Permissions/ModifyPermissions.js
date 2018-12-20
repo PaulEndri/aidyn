@@ -5,6 +5,7 @@ class ModifyPermissions extends __1.Command {
     constructor() {
         super(...arguments);
         this.Parametrized = true;
+        this.Blurb = 'Command for bot owners and allowed users to modify users/roles/channels for a given command';
         this.Arguments = [
             { name: 'command' },
             { name: 'type', type: 'role|user|channel' },
@@ -14,23 +15,23 @@ class ModifyPermissions extends __1.Command {
         ];
     }
     async Run(message, args) {
-        if (message.author.id !== this.BotContext.Owner) {
-            message.reply('This command is only available to owner');
+        if (message.author.id !== this.BotContext.Owner && (!this.AllowedRoles || this.AllowedRoles.length === 0)) {
+            message.reply('[Permission Failure] This command is only available to owner');
         }
         const { command, target, add, remove, type } = args;
         const modifyingCommand = this.BotContext.LoadedCommands[command.toLowerCase()];
         if (!modifyingCommand) {
-            return message.reply(`Command ${command} not found`);
+            return message.reply(`[Error] Command ${command} not found`);
         }
         if (add && remove) {
-            return message.reply('Please only specify add OR remove');
+            return message.reply('[Missing Parameter] Please only specify add OR remove');
         }
         if (!'role|user|channel'.includes(type)) {
-            return message.reply('Type must be one of role, user, or channel');
+            return message.reply('[Error] Type must be one of role, user, or channel');
         }
         modifyingCommand.ModifyPermissions(type, add ? 'add' : 'remove', target.replace(/\D/g, ''));
         await modifyingCommand.Save();
-        return message.reply('Permissions updated and saved');
+        return message.reply('[Success] Permissions updated and saved');
     }
 }
 ModifyPermissions.NAME = 'modifyPermissions';

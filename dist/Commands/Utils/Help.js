@@ -4,15 +4,34 @@ const __1 = require("../..");
 class Help extends __1.Command {
     constructor() {
         super(...arguments);
-        this.Parametrized = true;
+        this.Arguments = [
+            { name: 'command' }
+        ];
+    }
+    RunForCommand(key) {
+        const command = this.BotContext.LoadedCommands[key];
+        if (!command) {
+            return `[Error] Command ${key} not found`;
+        }
+        const args = command.Arguments.map((arg) => {
+            const { name, text, type } = arg;
+            let response = `\t${name}:\n\t\tType: ${type || 'string'}`;
+            if (text) {
+                response += `\n\t\tInfo: ${text}`;
+            }
+            return response;
+        });
+        return `\nHelp for command: ${key}\n\t${command.Blurb}\n\n${args.join('\n')}`;
     }
     // @ts-ignore 
     async Run(message, args) {
-        // @ts-ignore
-        const commands = this.BotContext.LoadedCommands
+        if (args.command) {
+            return message.reply(this.RunForCommand(args.command));
+        }
+        const commands = Object.values(this.BotContext.LoadedCommands)
             .filter((cmd) => {
             const hasPermission = cmd.Validate(message);
-            return cmd.Disabled !== true && hasPermission;
+            return cmd.Disabled !== true && hasPermission && cmd.Name() !== 'help';
         })
             .map((command) => {
             let helpString = `${this.BotContext.Prefix}${command.Name()}`;
@@ -29,7 +48,7 @@ class Help extends __1.Command {
         }
         const msg = commands.join('\n');
         if (msg.length < 1900) {
-            return message.reply(`\`\`\`\n${msg}\`\`\``);
+            return message.reply(`Type ${this.BotContext.Prefix}help (command) for details about a specific command\n\`\`\`\n${msg}\`\`\``);
         }
         else {
             let activeIndex = 0;
@@ -44,7 +63,8 @@ class Help extends __1.Command {
                     messages[activeIndex] = `\n${currentCommand}`;
                 }
             }
-            return Promise.all(messages.map((msg) => message.reply(`\`\`\`\n${msg}\`\`\``)));
+            message.channel.send(`Type ${this.BotContext.Prefix}help (command) for details about a specific command`);
+            return Promise.all(messages.map((msg) => message.channel.send(`\`\`\`\n${msg}\`\`\``)));
         }
     }
 }

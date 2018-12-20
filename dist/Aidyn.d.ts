@@ -6,6 +6,7 @@ export default class Aidyn {
     private BotToken;
     private Processor;
     private Loaded;
+    private ReloadCustoms;
     Context: Context;
     constructor(config?: IConfig);
     LoadCommands(commands: any): Promise<any>;

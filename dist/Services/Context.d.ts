@@ -13,7 +13,8 @@ export default class Context implements IContext {
     Owner: string;
     constructor(client: DiscordClient, owner: string);
     Initialize(dbString?: string): Promise<any>;
+    private LoadCustomCommands;
     private LoadCommandsLocal;
     private LoadCommandsFromDatabase;
-    LoadCommands(Commands: any): Promise<ICommandList>;
+    LoadCommands(Commands: any, loadCustomCommands?: boolean): Promise<ICommandList>;
 }

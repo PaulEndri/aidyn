@@ -17,3 +17,4 @@ declare abstract class RoleAdmin extends Command {
     Run(message: Message, args: any): Promise<any>;
 }
 export default RoleAdmin;
+export declare const GenerateRoleAdmin: (name: any, leadRole: any, roleToAdd: any, guildId: any) => any;

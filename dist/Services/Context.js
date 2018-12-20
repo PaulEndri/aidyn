@@ -8,6 +8,7 @@ const Users_1 = __importDefault(require("../Database/Models/Users"));
 const Commands_1 = __importDefault(require("../Database/Models/Commands"));
 const State_1 = __importDefault(require("../Models/State"));
 const CommandList_1 = __importDefault(require("../Models/CommandList"));
+const RoleAdmin_1 = require("../Abstractions/Commands/RoleAdmin");
 const EMPTY_COMMAND = {
     AllowedChannels: [],
     AllowedRoles: [],
@@ -54,6 +55,26 @@ class Context {
             console.error('[ERROR] Database Failed to Load', e);
         });
     }
+    async LoadCustomCommands() {
+        const namespace = await Commands_1.default.findOne({ Namespace: '__CUSTOM__' });
+        const commands = namespace.Data;
+        Object.keys(commands).forEach((key) => {
+            const dbCommand = commands[key];
+            let command;
+            const { Type, AllowedChannels, AllowedRoles, AllowedUsers, AllowedGuilds, Data } = dbCommand;
+            switch (Type) {
+                case 'RoleAdmin':
+                    const roleData = Data;
+                    command = RoleAdmin_1.GenerateRoleAdmin(key, roleData.Lead, roleData.Role, AllowedGuilds[0]);
+                    break;
+                default:
+                    return;
+            }
+            if (command) {
+                this.LoadedCommands[key.toLowerCase()] = new command(AllowedChannels, AllowedRoles, AllowedUsers, true);
+            }
+        });
+    }
     async LoadCommandsLocal(Commands) {
         const data = new CommandList_1.default();
         Object.keys(Commands).forEach((key) => {
@@ -85,7 +106,7 @@ class Context {
         });
         return data;
     }
-    async LoadCommands(Commands) {
+    async LoadCommands(Commands, loadCustomCommands = false) {
         if (this.Loading === true) {
             const deferred = new Promise((resolve) => setTimeout(resolve, 300));
             await deferred;
@@ -95,6 +116,9 @@ class Context {
         }
         else {
             this.LoadedCommands = await this.LoadCommandsLocal(Commands);
+        }
+        if (loadCustomCommands) {
+            await this.LoadCustomCommands();
         }
         return this.LoadedCommands;
     }

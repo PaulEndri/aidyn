@@ -11,21 +11,21 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 class Aidyn {
     constructor(config) {
-        const { BotToken, ConnectionString, Prefix, Logging, CustomProcessor, Owner } = config;
+        const { BotToken, ConnectionString, Prefix, Logging, CustomProcessor, Owner, ReloadCustoms } = config;
         this.Client = new discord_js_1.Client();
         this.Loaded = false;
         this.Context = new Context_1.default(this.Client, Owner);
         this.BotToken = BotToken;
         this.Processor = CustomProcessor || new Processor_1.default(this.Context, Prefix, Owner, Logging);
-        ;
         this.ConnectionString = ConnectionString;
         this.Context.Prefix = Prefix;
+        this.ReloadCustoms = ReloadCustoms;
     }
     async LoadCommands(commands) {
         if (this.Context.Loading !== false) {
             await this.Context.Initialize(this.ConnectionString);
         }
-        const results = await this.Context.LoadCommands(commands);
+        const results = await this.Context.LoadCommands(commands, this.ReloadCustoms);
         this.Loaded = true;
         return results;
     }

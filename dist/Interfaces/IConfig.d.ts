@@ -6,4 +6,5 @@ export default interface IConfig {
     Prefix?: string;
     CustomProcessor?: Processor;
     Owner?: string;
+    ReloadCustoms?: boolean;
 }

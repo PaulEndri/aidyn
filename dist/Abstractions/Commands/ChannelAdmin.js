@@ -17,7 +17,7 @@ class ChannelAdmin extends Command_1.default {
             { name: 'channel', type: '*', text: 'Name or tag of channel being removed' }
         ];
         const _roles = Object.getPrototypeOf(this).constructor.ROLES;
-        if (_roles && _roles.length > 0) {
+        if (_roles && _roles.length > 0 && (!roles || roles.length < 0)) {
             this.AllowedRoles = _roles;
         }
     }
@@ -60,39 +60,40 @@ class ChannelAdmin extends Command_1.default {
         ];
         if (serverChannel && haystack.includes(serverChannel.parentID)) {
             await serverChannel.delete(deleteMessage);
-            return message.channel.send(`Deleted Text Channel ${serverChannel.name} succesfully`);
+            return message.channel.send(`[Success] Deleted Text Channel ${serverChannel.name}`);
         }
         else {
             //They might/should have done the full name to delete a vc, so, instead lets try this
             const serverVoiceChannel = guild.channels.find(({ name }) => name === channel);
             if (serverVoiceChannel && haystack.includes(serverVoiceChannel.parentID)) {
                 await serverVoiceChannel.delete(deleteMessage);
-                return message.channel.send(`Deleted Voice Channel ${channel} succesfully`);
+                return message.channel.send(`[Success] Deleted Voice Channel ${channel} succesfully`);
             }
         }
-        return message.channel.send(`Unable to delete ${channel}`);
+        return message.channel.send(`[Error] Unable to delete ${channel}`);
     }
     async Run(message, args) {
         const { text, voice, topic, name, remove, channel } = args;
         if (remove !== undefined) {
             if (!channel) {
-                return message.channel.send('Please specify a channel');
+                return message.channel.send('[Missing Parameter] Please specify a channel');
             }
             return await this.RunDelete(message, message.guild, channel);
         }
         if (text === undefined && voice === undefined) {
-            message.channel.send('Please specify voice or text');
+            message.channel.send('[Missing Parameter]  Please specify voice or text');
         }
         else if (!name) {
-            message.channel.send('Please specify a name');
+            message.channel.send('[Missing Parameter]  Please specify a name');
         }
         if (text !== undefined) {
             await this.CreateTextChannel(message.guild, name, topic);
+            return message.channel.send(`[Success] Created ${name} channel(s)`);
         }
         if (voice !== undefined) {
             await this.CreateVoiceChannel(message.guild, name, topic);
+            return message.channel.send(`[Success] Created ${name} channel(s)`);
         }
-        return message.channel.send(`Created ${name} channel(s)`);
     }
 }
 ChannelAdmin.NAME = 'ChannelAdmin';

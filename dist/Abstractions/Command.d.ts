@@ -20,6 +20,7 @@ declare abstract class Command implements ICommand {
     Arguments: ICommandArgument[];
     Parametrized: boolean;
     Disabled: boolean;
+    Type: string;
     private Modified;
     constructor(channels: string[], roles: string[], users: string[], dbRequired?: boolean);
     LocalData: any;
@@ -48,7 +49,7 @@ declare abstract class Command implements ICommand {
     RemoveAllowedChannel(channelId: string, local?: boolean): void;
     RemoveAllowedRole(roleId: string, local?: boolean): void;
     RemoveAllowedUsers(user: string, local?: boolean): void;
-    Save(): Promise<any>;
+    Save(force?: boolean): Promise<any>;
     Validate(message: Message): boolean;
 }
 export default Command;

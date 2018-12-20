@@ -1,16 +1,19 @@
-export interface Datafield {
+export interface IDatafield {
     AllowedUsers?: string[];
     AllowedRoles?: string[];
     AllowedChannels?: string[];
+    AllowedGuilds?: string[];
+    Type?: string;
     Data?: any;
 }
-export interface Data {
-    [index: string]: Datafield;
+export interface IData {
+    [index: string]: IDatafield;
 }
 export default interface ICommands {
     AllowedUsers?: string[];
     AllowedRoles?: string[];
     AllowedChannels?: string[];
-    Data?: Data;
+    AllowedGuilds?: string[];
+    Data?: IData;
     Namespace?: string;
 }

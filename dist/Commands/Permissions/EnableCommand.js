@@ -5,21 +5,22 @@ class EnableCommand extends __1.Command {
     constructor() {
         super(...arguments);
         this.Parametrized = true;
+        this.Blurb = 'Command for bot owners and allowed users to enable commands';
         this.Arguments = [
             { name: 'command' },
         ];
     }
     async Run(message, args) {
-        if (message.author.id !== this.BotContext.Owner) {
-            message.reply('This command is only available to owner');
+        if (message.author.id !== this.BotContext.Owner && (!this.AllowedRoles || this.AllowedRoles.length === 0)) {
+            message.reply('[Permission Failure] This command is only available to owner');
         }
         const { command } = args;
         const modifyingCommand = this.BotContext.LoadedCommands[command.toLowerCase()];
         if (!modifyingCommand) {
-            return message.reply(`Command ${command} not found`);
+            return message.reply(`[Error] Command ${command} not found`);
         }
         modifyingCommand.Disabled = false;
-        return message.reply(`Command ${command} has been enabled`);
+        return message.reply(`[Success] Command ${command} has been enabled`);
     }
 }
 EnableCommand.NAME = 'enableCommand';

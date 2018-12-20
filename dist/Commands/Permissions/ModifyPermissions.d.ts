@@ -4,6 +4,7 @@ declare class ModifyPermissions extends Command {
     static NAME: string;
     static NAMESPACE: string;
     Parametrized: boolean;
+    Blurb: string;
     Arguments: ({
         name: string;
         type?: undefined;
