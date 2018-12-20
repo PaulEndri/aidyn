@@ -6,6 +6,7 @@ class SaveCommand extends Command {
     static NAMESPACE = 'util';
 
     public Parametrized = true;
+    public Lockdown     = true;
     public Blurb        = 'Command for bot owners and allowed users to save running bot data into a datbase if one has been configured';
     public Arguments    = [
         { name: 'command' },

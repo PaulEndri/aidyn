@@ -6,6 +6,7 @@ class DisableCommand extends Command {
     static NAMESPACE = 'admin';
 
     public Parametrized = true;
+    public Lockdown     = true;
     public Blurb        = 'Command for bot owners and allowed users to disable commands';
     public Arguments    = [
         { name: 'command', type:'string', text: 'Command type'},

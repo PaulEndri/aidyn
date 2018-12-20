@@ -6,6 +6,7 @@ declare abstract class RoleAdmin extends Command {
     static ROLE: string;
     static ROLES: string[];
     Parametrized: boolean;
+    Lockdown: boolean;
     Arguments: {
         name: string;
         type: string;

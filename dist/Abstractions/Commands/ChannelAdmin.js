@@ -8,6 +8,7 @@ class ChannelAdmin extends Command_1.default {
     constructor(channels, roles, users, dbRequired = false) {
         super(channels, roles, users, dbRequired);
         this.Parametrized = true;
+        this.Lockdown = true;
         this.Arguments = [
             { name: 'name', type: 'string', text: 'Name Of Channel' },
             { name: 'text', type: 'boolean', text: 'Is the channel a text channel?' },

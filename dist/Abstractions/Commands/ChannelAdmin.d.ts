@@ -6,6 +6,7 @@ declare abstract class ChannelAdmin extends Command {
     static VOICE_CATEGORY: string;
     static TEXT_CATEGORY: string;
     Parametrized: boolean;
+    Lockdown: boolean;
     Arguments: {
         name: string;
         type: string;

@@ -6,6 +6,7 @@ class ModifyPermissions extends Command {
     static NAMESPACE = 'admin';
 
     public Parametrized = true;
+    public Lockdown     = true;
     public Blurb        = 'Command for bot owners and allowed users to modify users/roles/channels for a given command';
     public Arguments    = [
         { name: 'command' },

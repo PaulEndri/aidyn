@@ -4,6 +4,7 @@ declare class SaveCommand extends Command {
     static NAME: string;
     static NAMESPACE: string;
     Parametrized: boolean;
+    Lockdown: boolean;
     Blurb: string;
     Arguments: {
         name: string;

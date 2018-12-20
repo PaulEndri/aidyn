@@ -5,6 +5,7 @@ class DebugCommand extends __1.Command {
     constructor() {
         super(...arguments);
         this.Parametrized = true;
+        this.Lockdown = true;
         this.Blurb = 'Owner only plz';
         this.Arguments = [
             { name: 'command' },

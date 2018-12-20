@@ -7,6 +7,7 @@ class RoleAdminCreate extends Command {
     static NAMESPACE = 'admin';
 
     public Parametrized = true;
+    public Lockdown     = true;
     public Blurb        = 'Command for bot owners and allowed users to create dynamic role admin commands';
     public Arguments    = [
         { name: 'name', type:'string', text: 'Command name'},

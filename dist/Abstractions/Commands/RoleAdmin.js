@@ -8,6 +8,7 @@ class RoleAdmin extends Command_1.default {
     constructor(channels, roles, users, dbRequired = false) {
         super(channels, roles, users, dbRequired);
         this.Parametrized = true;
+        this.Lockdown = true;
         this.Arguments = [
             { name: 'add', type: 'boolean', text: 'Is a user being added to the role?' },
             { name: 'remove', type: 'boolean', text: 'Is a user being removed from the role?' },

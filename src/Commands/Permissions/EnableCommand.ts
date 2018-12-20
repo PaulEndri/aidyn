@@ -6,6 +6,7 @@ class EnableCommand extends Command {
     static NAMESPACE = 'admin';
 
     public Parametrized = true;
+    public Lockdown     = true;
     public Blurb        = 'Command for bot owners and allowed users to enable commands';
     public Arguments    = [
         { name: 'command' },

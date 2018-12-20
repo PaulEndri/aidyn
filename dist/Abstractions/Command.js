@@ -231,6 +231,11 @@ class Command {
         if (!this.ValidateRoles(message.member.roles) || !this.ValidateChannel(message.channel.id)) {
             hasPermission = false;
         }
+        if (this.Lockdown === true) {
+            if ((!this.AllowedRoles || this.AllowedRoles.length === 0) && message.author.id !== this.BotContext.Owner) {
+                hasPermission = false;
+            }
+        }
         return hasPermission;
     }
 }

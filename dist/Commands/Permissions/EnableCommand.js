@@ -5,6 +5,7 @@ class EnableCommand extends __1.Command {
     constructor() {
         super(...arguments);
         this.Parametrized = true;
+        this.Lockdown = true;
         this.Blurb = 'Command for bot owners and allowed users to enable commands';
         this.Arguments = [
             { name: 'command' },

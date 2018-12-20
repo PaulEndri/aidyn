@@ -5,6 +5,7 @@ class SaveCommand extends __1.Command {
     constructor() {
         super(...arguments);
         this.Parametrized = true;
+        this.Lockdown = true;
         this.Blurb = 'Command for bot owners and allowed users to save running bot data into a datbase if one has been configured';
         this.Arguments = [
             { name: 'command' },

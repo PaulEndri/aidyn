@@ -18,4 +18,5 @@ export default interface ICommand {
     LastRun          : number;
     Disabled         : boolean;
     Arguments        : ICommandArgument[];
+    Lockdown         : boolean;
 }

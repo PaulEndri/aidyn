@@ -7,6 +7,7 @@ abstract class ChannelAdmin extends Command {
     static VOICE_CATEGORY = '';
     static TEXT_CATEGORY  = '';
     public Parametrized   = true;
+    public Lockdown       = true;
     public Arguments      = [
         { name: 'name', type: 'string', text: 'Name Of Channel'},
         { name: 'text', type: 'boolean', text: 'Is the channel a text channel?'},

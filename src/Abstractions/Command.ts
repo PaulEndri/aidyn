@@ -24,6 +24,7 @@ abstract class Command implements ICommand {
     public Parametrized     : boolean;
     public Disabled         : boolean;
     public Type             : string;
+    public Lockdown         : boolean;
     private Modified        : boolean;
 
     public constructor(channels: string[], roles: string[], users: string[], dbRequired = false) {
@@ -301,6 +302,12 @@ abstract class Command implements ICommand {
 
         if (!this.ValidateRoles(message.member.roles) || !this.ValidateChannel(message.channel.id)) {
             hasPermission = false;
+        }
+
+        if (this.Lockdown === true) {
+            if ((!this.AllowedRoles || this.AllowedRoles.length === 0) && message.author.id !== this.BotContext.Owner) {
+                hasPermission = false;
+            }
         }
 
         return hasPermission;

@@ -6,6 +6,7 @@ class DebugCommand extends Command {
     static NAMESPACE = 'util';
 
     public Parametrized = true;
+    public Lockdown     = true;
     public Blurb        = 'Owner only plz';
     public Arguments    = [
         { name: 'command' },

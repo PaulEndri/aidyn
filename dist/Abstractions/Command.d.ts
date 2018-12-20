@@ -21,6 +21,7 @@ declare abstract class Command implements ICommand {
     Parametrized: boolean;
     Disabled: boolean;
     Type: string;
+    Lockdown: boolean;
     private Modified;
     constructor(channels: string[], roles: string[], users: string[], dbRequired?: boolean);
     LocalData: any;

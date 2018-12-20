@@ -8,6 +8,7 @@ abstract class RoleAdmin extends Command {
     static ROLES     = [''];
 
     public Parametrized = true;
+    public Lockdown     = true;
     public Arguments    = [
         { name: 'add', type: 'boolean', text: 'Is a user being added to the role?' },
         { name: 'remove', type: 'boolean', text: 'Is a user being removed from the role?'},
