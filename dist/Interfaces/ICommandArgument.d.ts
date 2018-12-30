@@ -4,3 +4,4 @@ export default interface ICommandArgument {
     text?: string;
     alias?: string;
 }
+//# sourceMappingURL=ICommandArgument.d.ts.map

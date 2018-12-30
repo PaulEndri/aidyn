@@ -13,3 +13,4 @@ export default class Aidyn {
     Start(commands?: any): Promise<Aidyn>;
     Stop(): Promise<any>;
 }
+//# sourceMappingURL=Aidyn.d.ts.map

@@ -14,3 +14,4 @@ export default class Processor implements IProcessor {
     SaveLogs(log: ILogsModel): Promise<boolean>;
     Handle(message: Message): Promise<any>;
 }
+//# sourceMappingURL=Processor.d.ts.map

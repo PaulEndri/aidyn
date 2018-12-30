@@ -10,3 +10,4 @@ export default interface IContext {
     LoadedCommands: ICommandList;
     Prefix: String;
 }
+//# sourceMappingURL=IContext.d.ts.map

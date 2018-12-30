@@ -3,3 +3,4 @@ import Command from "../Abstractions/Command";
 export default class CommandList implements ICommandList {
     [name: string]: Command;
 }
+//# sourceMappingURL=CommandList.d.ts.map

@@ -3,3 +3,4 @@ export default interface ExportedCommandInterface {
     Name: string;
     Command: Command;
 }
+//# sourceMappingURL=IExportedCommand.d.ts.map

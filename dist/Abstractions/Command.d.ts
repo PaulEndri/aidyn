@@ -54,3 +54,4 @@ declare abstract class Command implements ICommand {
     Validate(message: Message): boolean;
 }
 export default Command;
+//# sourceMappingURL=Command.d.ts.map

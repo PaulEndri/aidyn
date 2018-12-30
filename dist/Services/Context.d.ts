@@ -18,3 +18,4 @@ export default class Context implements IContext {
     private LoadCommandsFromDatabase;
     LoadCommands(Commands: any, loadCustomCommands?: boolean): Promise<ICommandList>;
 }
+//# sourceMappingURL=Context.d.ts.map

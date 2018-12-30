@@ -4,3 +4,4 @@ export interface ILogsModel extends ILogs, Document {
 }
 declare const Logs: Model<ILogsModel>;
 export default Logs;
+//# sourceMappingURL=Logs.d.ts.map

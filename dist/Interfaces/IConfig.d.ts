@@ -8,3 +8,4 @@ export default interface IConfig {
     Owner?: string;
     ReloadCustoms?: boolean;
 }
+//# sourceMappingURL=IConfig.d.ts.map

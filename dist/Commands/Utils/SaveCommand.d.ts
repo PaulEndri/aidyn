@@ -12,3 +12,4 @@ declare class SaveCommand extends Command {
     Run(message: Message, args: any): Promise<Message | Message[]>;
 }
 export default SaveCommand;
+//# sourceMappingURL=SaveCommand.d.ts.map

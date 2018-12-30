@@ -12,3 +12,4 @@ declare class DebugCommand extends Command {
     Run(message: Message, args: any): Promise<Message | Message[]>;
 }
 export default DebugCommand;
+//# sourceMappingURL=DebugCommand.d.ts.map

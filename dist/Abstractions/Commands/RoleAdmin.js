@@ -21,7 +21,7 @@ class RoleAdmin extends Command_1.default {
     }
     async AddDiscordRole(message, id) {
         const guild = message.guild;
-        const member = guild.members.find((member) => member.id === id);
+        const member = guild.members.find((member) => member.id === id.replace(/\D/g, ''));
         const role = Object.getPrototypeOf(this).constructor.ROLE;
         if (!member.roles.has(role)) {
             member.addRole(role, `Added by ${message.author.username}`);
@@ -29,7 +29,7 @@ class RoleAdmin extends Command_1.default {
     }
     async RemoveDiscordRole(message, id) {
         const guild = message.guild;
-        const member = guild.members.find((member) => member.id === id);
+        const member = guild.members.find((member) => member.id === id.replace(/\D/g, ''));
         const role = Object.getPrototypeOf(this).constructor.ROLE;
         if (member.roles.has(role)) {
             return member.removeRole(role, `Removed by ${message.author.username}`);

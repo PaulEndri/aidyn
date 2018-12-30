@@ -10,3 +10,4 @@ declare class Help extends Command {
     Run(message: Message, args: any): Promise<Message | (Message | Message[])[]>;
 }
 export default Help;
+//# sourceMappingURL=Help.d.ts.map

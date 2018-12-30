@@ -155,7 +155,7 @@ class Command {
                 }
             }
             else {
-                values[words[0]] = words.slice(1).join(' ').trim();
+                values[words[0]] = words.slice(1).join(' ').trim() || true;
             }
         });
         args.forEach((argument) => {

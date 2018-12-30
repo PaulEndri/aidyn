@@ -19,3 +19,4 @@ declare abstract class RoleAdmin extends Command {
 }
 export default RoleAdmin;
 export declare const GenerateRoleAdmin: (name: any, leadRole: any, roleToAdd: any, guildId: any) => any;
+//# sourceMappingURL=RoleAdmin.d.ts.map

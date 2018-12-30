@@ -12,3 +12,4 @@ declare class EnableCommand extends Command {
     Run(message: Message, args: any): Promise<Message | Message[]>;
 }
 export default EnableCommand;
+//# sourceMappingURL=EnableCommand.d.ts.map

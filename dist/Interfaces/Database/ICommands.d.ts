@@ -17,3 +17,4 @@ export default interface ICommands {
     Data?: IData;
     Namespace?: string;
 }
+//# sourceMappingURL=ICommands.d.ts.map

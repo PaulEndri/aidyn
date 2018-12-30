@@ -16,3 +16,4 @@ declare class ModifyPermissions extends Command {
     Run(message: Message, args: any): Promise<Message | Message[]>;
 }
 export default ModifyPermissions;
+//# sourceMappingURL=ModifyPermissions.d.ts.map

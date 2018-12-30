@@ -10,3 +10,4 @@ export default class State implements IState {
     };
     constructor(commands: any, users: any);
 }
+//# sourceMappingURL=State.d.ts.map

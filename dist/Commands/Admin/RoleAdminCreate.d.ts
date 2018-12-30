@@ -14,3 +14,4 @@ declare class RoleAdminCreate extends Command {
     Run(message: Message, args: any): Promise<Message | Message[]>;
 }
 export default RoleAdminCreate;
+//# sourceMappingURL=RoleAdminCreate.d.ts.map

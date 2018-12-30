@@ -10,3 +10,4 @@ export default interface IProcessor {
     Handle: (message: Message) => Promise<any>;
     SaveLogs: (log: ILogsModel) => Promise<boolean>;
 }
+//# sourceMappingURL=IProcessor.d.ts.map

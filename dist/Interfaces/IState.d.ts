@@ -8,3 +8,4 @@ export default interface IState {
         [index: string]: ICommands;
     };
 }
+//# sourceMappingURL=IState.d.ts.map

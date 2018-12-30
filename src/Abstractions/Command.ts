@@ -209,7 +209,7 @@ abstract class Command implements ICommand {
                     values[key] = value.join(' ').trim();
                 }
             } else {
-                values[words[0]] = words.slice(1).join(' ').trim();
+                values[words[0]] = words.slice(1).join(' ').trim() || true;
             }
         });
 
