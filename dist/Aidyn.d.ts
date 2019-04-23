@@ -1,12 +1,13 @@
+import { Client } from 'discord.js';
 import Context from './Services/Context';
 import IConfig from './Interfaces/IConfig';
 export default class Aidyn {
-    private Client;
     private ConnectionString;
     private BotToken;
     private Processor;
     private Loaded;
     private ReloadCustoms;
+    Client: Client;
     Context: Context;
     constructor(config?: IConfig);
     LoadCommands(commands: any): Promise<any>;

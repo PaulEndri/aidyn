@@ -8,12 +8,12 @@ import IConfig from './Interfaces/IConfig';
 dotenv.config()
 
 export default class Aidyn {
-    private Client:           Client;
     private ConnectionString: string;
     private BotToken:         string;
     private Processor:        Processor;
     private Loaded:           boolean;
     private ReloadCustoms:    boolean;
+    public Client:           Client;
     public Context:           Context;
 
     constructor(config?: IConfig) {
