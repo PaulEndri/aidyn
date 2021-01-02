@@ -176,11 +176,7 @@ export class Context implements IContext {
 			await deferred;
 		}
 
-		if (this.UseDb) {
-			this.LoadedCommands = await this.LoadCommandsFromDatabase(Commands);
-		} else {
-			this.LoadedCommands = await this.LoadCommandsLocal(Commands);
-		}
+		this.LoadedCommands = await this.LoadCommandsLocal(Commands);
 
 		if (loadCustomCommands) {
 			await this.LoadCustomCommands();
