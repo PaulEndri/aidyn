@@ -1,92 +1,92 @@
-import { Command } from "../..";
-import { Message } from "discord.js";
-import ICommandArgument from "../../Interfaces/ICommandArgument";
+import Command from '../../Abstractions/Command';
+import { Message } from 'discord.js';
+import ICommandArgument from '../../Interfaces/ICommandArgument';
 
 class Help extends Command {
-    static NAME      = 'help';
-    static NAMESPACE = 'util';
+	static NAME = 'help';
+	static NAMESPACE = 'util';
 
-    public Arguments = [
-        {name: 'command'}
-    ]
+	public Arguments = [ { name: 'command' } ];
 
-    private RunForCommand(key: string): string {
-        const command = this.BotContext.LoadedCommands[key];
+	private RunForCommand(key: string): string {
+		const command = this.BotContext.LoadedCommands[key];
 
-        if (!command) {
-            return `[Error] Command ${key} not found`;
-        }
+		if (!command) {
+			return `[Error] Command ${key} not found`;
+		}
 
-        const args = command.Arguments.map((arg: ICommandArgument) => {
-            const {
-                name,
-                text,
-                type
-            } = arg;
-            let response = `\t${name}:\n\t\tType: ${type || 'string'}`;
+		const args = command.Arguments.map((arg: ICommandArgument) => {
+			const { name, text, type } = arg;
+			let response = `\t${name}:\n\t\tType: ${type || 'string'}`;
 
-            if (text) {
-                response += `\n\t\tInfo: ${text}`;
-            }
+			if (text) {
+				response += `\n\t\tInfo: ${text}`;
+			}
 
-            return response
-        })
+			return response;
+		});
 
-        return `\nHelp for command: ${key}\n\t${command.Blurb}\n\n${args.join('\n')}`;
-    }
-    // @ts-ignore 
-    public async Run(message: Message, args: any) {
-        if (args && args.command) {
-            return message.reply(this.RunForCommand(args.command));
-        }
+		return `\nHelp for command: ${key}\n\t${command.Blurb}\n\n${args.join('\n')}`;
+	}
+	// @ts-ignore
+	public async Run(message: Message, args: any) {
+		if (args && args.command) {
+			return message.reply(this.RunForCommand(args.command));
+		}
 
-        const commands = Object.values(this.BotContext.LoadedCommands)
-            .filter((cmd: Command) => {
-                const hasPermission = cmd.Validate(message);
-            
-                return cmd.Disabled !== true && hasPermission && cmd.Name() !== 'help';
-            })
-            .map((command: Command) => {
-                let helpString = `\n${this.BotContext.Prefix}${command.Name().toLowerCase()}`;
+		const commands = Object.values(this.BotContext.LoadedCommands)
+			.filter((cmd: Command) => {
+				const hasPermission = cmd.Validate(message);
 
-                if (command.Arguments && command.Arguments.length > 0) {
-                    command.Arguments.forEach((arg: ICommandArgument) => {
-                        const prefix = command.Parametrized ? '--' : '';
-            
-                        helpString = helpString += `\n\t${prefix}${arg.name}=${arg.type || 'value'}`
-                    })
-                }
+				return cmd.Disabled !== true && hasPermission && cmd.Name() !== 'help';
+			})
+			.map((command: Command) => {
+				let helpString = `\n${this.BotContext.Prefix}${command.Name().toLowerCase()}`;
 
-                return helpString;
-            })
+				if (command.Arguments && command.Arguments.length > 0) {
+					command.Arguments.forEach((arg: ICommandArgument) => {
+						const prefix = command.Parametrized ? '--' : '';
 
-        if (commands.length <= 0) {
-            return message.reply('No commands found');
-        }
+						helpString = helpString += `\n\t${prefix}${arg.name}=${arg.type ||
+							'value'}`;
+					});
+				}
 
-        const msg = commands.join('\n');
+				return helpString;
+			});
 
-        if (msg.length < 1900) {
-            return message.reply(`Type ${this.BotContext.Prefix}help (command) for details about a specific command\n\`\`\`\n${msg}\`\`\``);
-        } else {
-            let activeIndex = 0;
-            const messages  = [''];
+		if (commands.length <= 0) {
+			return message.reply('No commands found');
+		}
 
-            while (commands.length > 0) {
-                const currentCommand = commands.shift();
+		const msg = commands.join('\n');
 
-                if (messages[activeIndex].length + currentCommand.length < 1900) {
-                    messages[activeIndex] = `${messages[activeIndex]}\n${currentCommand}`;
-                } else {
-                    activeIndex           = activeIndex + 1;
-                    messages[activeIndex] = `\n${currentCommand}`;
-                }
-            }
+		if (msg.length < 1900) {
+			return message.reply(
+				`Type ${this.BotContext
+					.Prefix}help (command) for details about a specific command\n\`\`\`\n${msg}\`\`\``
+			);
+		} else {
+			let activeIndex = 0;
+			const messages = [ '' ];
 
-            message.channel.send(`Type ${this.BotContext.Prefix}help (command) for details about a specific command`);
-            return Promise.all(messages.map((msg) => message.channel.send(`\`\`\`\n${msg}\`\`\``)))
-        }
-    }
+			while (commands.length > 0) {
+				const currentCommand = commands.shift();
+
+				if (messages[activeIndex].length + currentCommand.length < 1900) {
+					messages[activeIndex] = `${messages[activeIndex]}\n${currentCommand}`;
+				} else {
+					activeIndex = activeIndex + 1;
+					messages[activeIndex] = `\n${currentCommand}`;
+				}
+			}
+
+			message.channel.send(
+				`Type ${this.BotContext.Prefix}help (command) for details about a specific command`
+			);
+			return Promise.all(messages.map((msg) => message.channel.send(`\`\`\`\n${msg}\`\`\``)));
+		}
+	}
 }
 
 export default Help;

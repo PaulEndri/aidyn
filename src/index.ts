@@ -1,18 +1,10 @@
-import { CommandsSchema } from "./Database/Models/Commands";
-import Command from './Abstractions/Command';
-import Processor from './Services/Processor';
-import RoleAdmin from './Abstractions/Commands/RoleAdmin';
-import ChannelAdmin from './Abstractions/Commands/ChannelAdmin';
 import Aidyn from './Aidyn';
-import Commands from './Commands';
-
-export {
-    RoleAdmin,
-    ChannelAdmin,
-    Processor,
-    Command,
-    CommandsSchema,
-    Commands
-};
 
 export default Aidyn;
+
+export * from './Abstractions/Command';
+export * from './Abstractions/Commands/ChannelAdmin';
+export * from './Abstractions/Commands/RoleAdmin';
+export * from './Services/Processor';
+export * from './Database/Models/Commands';
+export * from './Commands';
