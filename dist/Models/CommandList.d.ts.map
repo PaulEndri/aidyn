@@ -1,1 +1,0 @@
-{"version":3,"file":"CommandList.d.ts","sourceRoot":"","sources":["../../src/Models/CommandList.ts"],"names":[],"mappings":"AAAA,OAAO,YAAY,MAAM,4BAA4B,CAAC;AACtD,OAAO,OAAO,MAAM,yBAAyB,CAAC;AAE9C,MAAM,CAAC,OAAO,OAAO,WAAY,YAAW,YAAY;IACpD,CAAC,IAAI,EAAE,MAAM,GAAG,OAAO,CAAA;CAC1B"}

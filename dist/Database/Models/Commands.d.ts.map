@@ -1,1 +1,0 @@
-{"version":3,"file":"Commands.d.ts","sourceRoot":"","sources":["../../../src/Database/Models/Commands.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,EAAE,KAAK,EAAS,MAAM,UAAU,CAAC;AAC1D,OAAO,SAAS,MAAM,qCAAqC,CAAC;AAI5D,MAAM,WAAW,cAAe,SAAQ,SAAS,EAAE,QAAQ;CAAG;AAE9D,eAAO,MAAM,cAAc,EAAE,MAQ3B,CAAC;AAaH,QAAA,MAAM,QAAQ,EAAE,KAAK,CAAC,cAAc,CAAqD,CAAC;AAE1F,eAAe,QAAQ,CAAC"}
