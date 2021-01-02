@@ -9,6 +9,7 @@ import { ICommandList } from '../Interfaces/ICommandList';
 import { CommandList } from '../Models/CommandList';
 import { GenerateRoleAdmin } from '../Abstractions/Commands/RoleAdmin';
 import { ICustomRoleAdminData } from '../Interfaces/ICustomRoleAdminData';
+import { Command } from '../Abstractions/Command';
 
 const EMPTY_COMMAND = {
 	AllowedChannels: [],
@@ -119,9 +120,7 @@ export class Context implements IContext {
 	private async LoadCommandsLocal(Commands: any): Promise<ICommandList> {
 		const data = new CommandList();
 
-		Object.keys(Commands).forEach((key: string) => {
-			const { AllowedChannels, AllowedRoles, AllowedUsers } = EMPTY_COMMAND;
-
+		Object.entries<Command>(Commands).forEach(([ key, val ]) => {
 			if (!Commands[key].NAMESPACE || !Commands[key].NAME) {
 				console.log(
 					`[ERROR] Failed to load ${key} because it lacks a NAME and/or NAMESPACE property`
@@ -129,12 +128,7 @@ export class Context implements IContext {
 				return;
 			}
 
-			data[key.toLowerCase()] = new Commands[key](
-				AllowedChannels,
-				AllowedRoles,
-				AllowedUsers,
-				false
-			);
+			data[key.toLowerCase()] = val;
 			data[key.toLowerCase()].BotContext = this;
 
 			console.log('[SUCCESS] Loaded Command', key);
@@ -144,6 +138,7 @@ export class Context implements IContext {
 	}
 
 	private async LoadCommandsFromDatabase(Commands: any): Promise<ICommandList> {
+		throw new Error('DB Loading Commands Currently Unsupported');
 		const data = new CommandList();
 		const databaseCommands = this.State.Commands;
 

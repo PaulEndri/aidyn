@@ -13,11 +13,7 @@ export abstract class Command implements ICommand {
 	static NAMESPACE: string;
 
 	public AllowedGuilds: string[];
-	public AllowedChannels: string[];
-	public AllowedRoles: string[];
-	public AllowedUsers: string[];
 	public Data: any;
-	public RequiresDatabase: boolean;
 	public Blurb: string;
 	public BotContext: IContext;
 	public CooldownRate: number;
@@ -29,12 +25,12 @@ export abstract class Command implements ICommand {
 	public Lockdown: boolean;
 	private Modified: boolean;
 
-	public constructor(channels: string[], roles: string[], users: string[], dbRequired = false) {
-		this.AllowedChannels = channels;
-		this.AllowedRoles = roles;
-		this.AllowedUsers = users;
-		this.RequiresDatabase = dbRequired;
-
+	public constructor(
+		public AllowedChannels: string[],
+		public AllowedRoles: string[],
+		public AllowedUsers: string[],
+		public RequiresDatabase = false
+	) {
 		this.Modified = false;
 	}
 
