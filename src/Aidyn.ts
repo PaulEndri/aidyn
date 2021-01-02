@@ -35,6 +35,11 @@ export class Aidyn {
 		this.ConnectionString = ConnectionString;
 		this.Context.Prefix = Prefix;
 		this.ReloadCustoms = ReloadCustoms;
+
+		if (!this.ConnectionString) {
+			this.Context.UseDb = false;
+			this.Context.Loading = false;
+		}
 	}
 
 	public async LoadCommands(commands: any): Promise<any> {

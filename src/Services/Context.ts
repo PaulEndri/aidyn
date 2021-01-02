@@ -11,12 +11,12 @@ import { GenerateRoleAdmin } from '../Abstractions/Commands/RoleAdmin';
 import { ICustomRoleAdminData } from '../Interfaces/ICustomRoleAdminData';
 import { Command } from '../Abstractions/Command';
 
-const EMPTY_COMMAND = {
-	AllowedChannels: [],
-	AllowedRoles: [],
-	AllowedUsers: [],
-	Data: {}
-};
+// const EMPTY_COMMAND = {
+// 	AllowedChannels: [],
+// 	AllowedRoles: [],
+// 	AllowedUsers: [],
+// 	Data: {}
+// };
 
 export class Context implements IContext {
 	public Client: DiscordClient;
@@ -137,37 +137,37 @@ export class Context implements IContext {
 		return data;
 	}
 
-	private async LoadCommandsFromDatabase(Commands: any): Promise<ICommandList> {
-		throw new Error('DB Loading Commands Currently Unsupported');
-		const data = new CommandList();
-		const databaseCommands = this.State.Commands;
+	// private async LoadCommandsFromDatabase(Commands: any): Promise<ICommandList> {
+	// 	throw new Error('DB Loading Commands Currently Unsupported');
+	// 	const data = new CommandList();
+	// 	const databaseCommands = this.State.Commands;
 
-		Object.keys(Commands).forEach((key: string) => {
-			const commandData = databaseCommands[key] || { ...EMPTY_COMMAND, Namespace: key };
+	// 	Object.keys(Commands).forEach((key: string) => {
+	// 		const commandData = databaseCommands[key] || { ...EMPTY_COMMAND, Namespace: key };
 
-			const { AllowedChannels, AllowedRoles, AllowedUsers, Data } = commandData;
+	// 		const { AllowedChannels, AllowedRoles, AllowedUsers, Data } = commandData;
 
-			if (!Commands[key].NAMESPACE || !Commands[key].NAME) {
-				console.log(
-					`[ERROR] Failed to load ${key} because it lacks a NAME and/or NAMESPACE property`
-				);
-				return;
-			}
+	// 		if (!Commands[key].NAMESPACE || !Commands[key].NAME) {
+	// 			console.log(
+	// 				`[ERROR] Failed to load ${key} because it lacks a NAME and/or NAMESPACE property`
+	// 			);
+	// 			return;
+	// 		}
 
-			data[key.toLowerCase()] = new Commands[key](
-				AllowedChannels,
-				AllowedRoles,
-				AllowedUsers,
-				true
-			);
-			data[key.toLowerCase()].Data = Data;
-			data[key.toLowerCase()].BotContext = this;
+	// 		data[key.toLowerCase()] = new Commands[key](
+	// 			AllowedChannels,
+	// 			AllowedRoles,
+	// 			AllowedUsers,
+	// 			true
+	// 		);
+	// 		data[key.toLowerCase()].Data = Data;
+	// 		data[key.toLowerCase()].BotContext = this;
 
-			console.log('[SUCCESS] Loaded Command', key);
-		});
+	// 		console.log('[SUCCESS] Loaded Command', key);
+	// 	});
 
-		return data;
-	}
+	// 	return data;
+	// }
 
 	public async LoadCommands(Commands: any, loadCustomCommands = false): Promise<ICommandList> {
 		if (this.Loading === true) {

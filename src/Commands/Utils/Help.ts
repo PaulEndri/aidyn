@@ -8,6 +8,9 @@ export class Help extends Command {
 
 	public Arguments = [ { name: 'command' } ];
 
+	public NAME = 'help';
+	public NAMESPACE = 'util';
+
 	private RunForCommand(key: string): string {
 		const command = this.BotContext.LoadedCommands[key];
 
