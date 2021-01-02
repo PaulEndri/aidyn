@@ -1,14 +1,14 @@
-import IContext from "./IContext";
-import { Message } from "discord.js";
-import { ILogsModel } from "../Database/Models/Logs";
+import { IContext } from './IContext';
+import { Message } from 'discord.js';
+import { ILogsModel } from '../Database/Models/Logs';
 
-export default interface IProcessor {
-    Context:      IContext;
-    Loaded:       boolean;
-    Logging:      number;
-    Prefix:       string;
-    Owner:        string;
+export interface IProcessor {
+	Context: IContext;
+	Loaded: boolean;
+	Logging: number;
+	Prefix: string;
+	Owner: string;
 
-    Handle:       (message: Message) => Promise<any>;
-    SaveLogs:     (log: ILogsModel) => Promise<boolean>;
+	Handle: (message: Message) => Promise<any>;
+	SaveLogs: (log: ILogsModel) => Promise<boolean>;
 }

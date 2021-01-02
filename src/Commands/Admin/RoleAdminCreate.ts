@@ -1,8 +1,8 @@
 import { Message } from 'discord.js';
-import Command from '../../Abstractions/Command';
-import RoleAdmin, { GenerateRoleAdmin } from '../../Abstractions/Commands/RoleAdmin';
+import { Command } from '../../Abstractions/Command';
+import { GenerateRoleAdmin, RoleAdmin } from '../../Abstractions/Commands/RoleAdmin';
 
-class RoleAdminCreate extends Command {
+export class RoleAdminCreate extends Command {
 	static NAME = 'roleAdminCreate';
 	static NAMESPACE = 'admin';
 
@@ -51,5 +51,3 @@ class RoleAdminCreate extends Command {
 		return message.reply(`[Success] Command ${this.BotContext.Prefix}${name} has been created`);
 	}
 }
-
-export default RoleAdminCreate;

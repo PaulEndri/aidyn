@@ -1,7 +1,7 @@
-import Command from '../../Abstractions/Command';
+import { Command } from '../../Abstractions/Command';
 import { Message } from 'discord.js';
 
-class SaveCommand extends Command {
+export class SaveCommand extends Command {
 	static NAME = 'saveCommand';
 	static NAMESPACE = 'util';
 
@@ -28,5 +28,3 @@ class SaveCommand extends Command {
 		return message.channel.send(`[Updated] Command ${command} has been saved`);
 	}
 }
-
-export default SaveCommand;

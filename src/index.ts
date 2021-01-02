@@ -1,7 +1,4 @@
-import Aidyn from './Aidyn';
-
-export default Aidyn;
-
+export * from './Aidyn';
 export * from './Abstractions/Command';
 export * from './Abstractions/Commands/ChannelAdmin';
 export * from './Abstractions/Commands/RoleAdmin';

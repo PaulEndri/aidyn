@@ -1,7 +1,7 @@
-import Command from '../../Abstractions/Command';
+import { Command } from '../../Abstractions/Command';
 import { Message } from 'discord.js';
 
-class ModifyPermissions extends Command {
+export class ModifyPermissions extends Command {
 	static NAME = 'modifyPermissions';
 	static NAMESPACE = 'admin';
 
@@ -47,5 +47,3 @@ class ModifyPermissions extends Command {
 		return message.channel.send('[Success] Permissions updated and saved');
 	}
 }
-
-export default ModifyPermissions;

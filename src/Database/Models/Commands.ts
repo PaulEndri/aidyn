@@ -1,31 +1,31 @@
 import { Document, Schema, Model, model } from 'mongoose';
-import ICommands from '../../Interfaces/Database/ICommands';
+import { ICommands as IDBCommands } from '../../Interfaces/Database/ICommands';
 
-const {Types} = Schema;
+const { Types } = Schema;
 
-export interface ICommandsModel extends ICommands, Document {};
+export interface ICommandsModel extends IDBCommands, Document {}
 
-export const CommandsSchema: Schema = new Schema({
-    AllowedRoles:    [Types.String],
-    AllowedChannels: [Types.String],
-    AllowedUsers:    [Types.String],
-    AllowedGuilds:   [Types.String],
-    CreatedAt:       [Types.Date],
-    Data:            Types.Mixed,
-    Namespace:       Types.String
+export const CommandsSchema: Schema<IDBCommands> = new Schema({
+	AllowedRoles: [ Types.String ],
+	AllowedChannels: [ Types.String ],
+	AllowedUsers: [ Types.String ],
+	AllowedGuilds: [ Types.String ],
+	CreatedAt: [ Types.Date ],
+	Data: Types.Mixed,
+	Namespace: Types.String
 });
 
-CommandsSchema
-    .pre('save', (next) => {
-        const now = new Date();
+CommandsSchema.pre('save', function(next) {
+	const now = new Date();
 
-        if (!this.CreatedAt) {
-            this.CreatedAt = now;
-        }
+	// @ts-ignore
+	if (!this.CreatedAt) {
+		// @ts-ignore
 
-        next();
-    });
+		this.CreatedAt = now;
+	}
 
-const Commands: Model<ICommandsModel> = model<ICommandsModel>("Commands", CommandsSchema);
+	next();
+});
 
-export default Commands;
+export const Commands: Model<ICommandsModel> = model<ICommandsModel>('Commands', CommandsSchema);

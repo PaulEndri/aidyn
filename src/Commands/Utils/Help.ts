@@ -1,8 +1,8 @@
-import Command from '../../Abstractions/Command';
+import { Command } from '../../Abstractions/Command';
 import { Message } from 'discord.js';
-import ICommandArgument from '../../Interfaces/ICommandArgument';
+import { ICommandArgument } from '../../Interfaces/ICommandArgument';
 
-class Help extends Command {
+export class Help extends Command {
 	static NAME = 'help';
 	static NAMESPACE = 'util';
 
@@ -34,7 +34,7 @@ class Help extends Command {
 			return message.reply(this.RunForCommand(args.command));
 		}
 
-		const commands = Object.values(this.BotContext.LoadedCommands)
+		const commands = Object.values<Command>(this.BotContext.LoadedCommands)
 			.filter((cmd: Command) => {
 				const hasPermission = cmd.Validate(message);
 
@@ -88,5 +88,3 @@ class Help extends Command {
 		}
 	}
 }
-
-export default Help;

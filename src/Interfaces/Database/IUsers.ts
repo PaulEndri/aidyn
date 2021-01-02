@@ -1,4 +1,4 @@
-export default interface IUsers {
-    Name : string;
-    Roles: string[];
+export interface IUsers {
+	Name: string;
+	Roles: string[];
 }

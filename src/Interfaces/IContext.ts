@@ -1,13 +1,13 @@
-import IState from "./IState";
-import { Client } from "discord.js";
-import ICommandList from "./ICommandList";
+import { IState } from './IState';
+import { Client } from 'discord.js';
+import { ICommandList } from './ICommandList';
 
-export default interface IContext {
-    Client         : Client;
-    Loading        : boolean;
-    State          : IState;
-    Owner          : string;
-    UseDb          : boolean;
-    LoadedCommands : ICommandList;
-    Prefix         : String;
+export interface IContext {
+	Client: Client;
+	Loading: boolean;
+	State: IState;
+	Owner: string;
+	UseDb: boolean;
+	LoadedCommands: ICommandList;
+	Prefix: String;
 }

@@ -1,5 +1,3 @@
-import Command from '../Abstractions/Command';
+import { Command } from '../Abstractions/Command';
 
-type ICommandList = Record<string, Command>;
-
-export default ICommandList;
+export type ICommandList = Record<string, Command>;

@@ -1,31 +1,30 @@
 import { Document, Schema, Model, model } from 'mongoose';
-import ILogs from '../../Interfaces/Database/ILogs'
+import { ILogs } from '../../Interfaces/Database/ILogs';
 
-const {Types} = Schema;
+const { Types } = Schema;
 
-export interface ILogsModel extends ILogs, Document {};
+export interface ILogsModel extends ILogs, Document {}
 
-const LogsSchema: Schema = new Schema({
-    User      : Types.String,
-    CreatedAt : Types.Date,
-    Channel   : Types.String,
-    Runtime   : Types.Number,
-    Command   : Types.String,
-    Success   : Types.Boolean,
-    Response  : Types.String
+const LogsSchema: Schema<ILogs> = new Schema({
+	User: Types.String,
+	CreatedAt: Types.Date,
+	Channel: Types.String,
+	Runtime: Types.Number,
+	Command: Types.String,
+	Success: Types.Boolean,
+	Response: Types.String
 });
 
-LogsSchema
-    .pre('save', (next) => {
-        const now = new Date();
+LogsSchema.pre('save', function(next) {
+	const now = new Date();
 
-        if (!this.CreatedAt) {
-            this.CreatedAt = now;
-        }
+	// @ts-ignore
+	if (!this.CreatedAt) {
+		// @ts-ignore
+		this.CreatedAt = now;
+	}
 
-        next();
-    });
+	next();
+});
 
-const Logs: Model<ILogsModel> = model<ILogsModel>("Logs", LogsSchema);
-
-export default Logs;
+export const Logs: Model<ILogsModel> = model<ILogsModel>('Logs', LogsSchema);

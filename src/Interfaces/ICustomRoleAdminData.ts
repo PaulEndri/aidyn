@@ -1,5 +1,4 @@
-
-export default interface ICustomRoleAdminData {
-    Role: string;
-    Lead: string[];
+export interface ICustomRoleAdminData {
+	Role: string;
+	Lead: string[];
 }

@@ -1,7 +1,7 @@
-import Command from '../../Abstractions/Command';
+import { Command } from '../../Abstractions/Command';
 import { Message } from 'discord.js';
 
-class EnableCommand extends Command {
+export class EnableCommand extends Command {
 	static NAME = 'enableCommand';
 	static NAMESPACE = 'admin';
 
@@ -31,5 +31,3 @@ class EnableCommand extends Command {
 		return message.channel.send(`[Success] Command ${command} has been enabled`);
 	}
 }
-
-export default EnableCommand;

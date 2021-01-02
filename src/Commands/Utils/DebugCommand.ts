@@ -1,7 +1,7 @@
-import Command from '../../Abstractions/Command';
+import { Command } from '../../Abstractions/Command';
 import { Message } from 'discord.js';
 
-class DebugCommand extends Command {
+export class DebugCommand extends Command {
 	static NAME = 'DebugCommand';
 	static NAMESPACE = 'util';
 
@@ -28,5 +28,3 @@ class DebugCommand extends Command {
 		return message.reply('GL HF');
 	}
 }
-
-export default DebugCommand;

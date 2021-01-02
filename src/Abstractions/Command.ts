@@ -1,15 +1,15 @@
-import ICommand from '../Interfaces/ICommand';
+import { ICommand } from '../Interfaces/ICommand';
 import { Message, Collection } from 'discord.js';
-import Commands from '../Database/Models/Commands';
-import IContext from '../Interfaces/IContext';
-import ICommandArgument from '../Interfaces/ICommandArgument';
+import { Commands } from '../Database/Models/Commands';
+import { IContext } from '../Interfaces/IContext';
+import { ICommandArgument } from '../Interfaces/ICommandArgument';
 
 /**
  * @module Command
  * @preferred
  */
 
-abstract class Command implements ICommand {
+export abstract class Command implements ICommand {
 	static NAMESPACE: string;
 
 	public AllowedGuilds: string[];
@@ -349,5 +349,3 @@ abstract class Command implements ICommand {
 		return hasPermission;
 	}
 }
-
-export default Command;
