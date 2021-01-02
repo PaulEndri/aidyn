@@ -93,7 +93,7 @@ class Context {
         const data = new CommandList_1.default();
         const databaseCommands = this.State.Commands;
         Object.keys(Commands).forEach((key) => {
-            const commandData = databaseCommands[key] || Object.assign({}, EMPTY_COMMAND, { Namespace: key });
+            const commandData = databaseCommands[key] || Object.assign(Object.assign({}, EMPTY_COMMAND), { Namespace: key });
             const { AllowedChannels, AllowedRoles, AllowedUsers, Data } = commandData;
             if (!Commands[key].NAMESPACE || !Commands[key].NAME) {
                 console.log(`[ERROR] Failed to load ${key} because it lacks a NAME and/or NAMESPACE property`);

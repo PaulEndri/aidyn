@@ -12,8 +12,8 @@ declare abstract class ChannelAdmin extends Command {
         type: string;
         text: string;
     }[];
-    readonly TextCategoryId: string;
-    readonly VoiceCategoryId: string;
+    get TextCategoryId(): string;
+    get VoiceCategoryId(): string;
     constructor(channels: string[], roles: string[], users: string[], dbRequired?: boolean);
     CreateVoiceChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel>;
     CreateTextChannel(guild: Guild, name: string, topic?: string): Promise<GuildChannel>;

@@ -1,5 +1,4 @@
 import Command from '../Abstractions/Command';
-export default interface ICommandList {
-    [index: string]: Command;
-}
+declare type ICommandList = Record<string, Command>;
+export default ICommandList;
 //# sourceMappingURL=ICommandList.d.ts.map

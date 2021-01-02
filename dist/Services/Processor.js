@@ -65,5 +65,5 @@ class Processor {
         }
     }
 }
-Processor.DELAY_TIMER = 300;
 exports.default = Processor;
+Processor.DELAY_TIMER = 300;

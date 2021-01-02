@@ -1,1 +1,1 @@
-{"version":3,"file":"ICommandList.d.ts","sourceRoot":"","sources":["../../src/Interfaces/ICommandList.ts"],"names":[],"mappings":"AAAA,OAAO,OAAO,MAAM,yBAAyB,CAAC;AAE9C,MAAM,CAAC,OAAO,WAAW,YAAY;IACjC,CAAC,KAAK,EAAE,MAAM,GAAG,OAAO,CAAA;CAC3B"}
+{"version":3,"file":"ICommandList.d.ts","sourceRoot":"","sources":["../../src/Interfaces/ICommandList.ts"],"names":[],"mappings":"AAAA,OAAO,OAAO,MAAM,yBAAyB,CAAC;AAE9C,aAAK,YAAY,GAAG,MAAM,CAAC,MAAM,EAAE,OAAO,CAAC,CAAC;AAE5C,eAAe,YAAY,CAAC"}

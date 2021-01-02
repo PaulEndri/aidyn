@@ -24,8 +24,9 @@ declare abstract class Command implements ICommand {
     Lockdown: boolean;
     private Modified;
     constructor(channels: string[], roles: string[], users: string[], dbRequired?: boolean);
-    LocalData: any;
-    readonly HasLocalData: boolean;
+    get LocalData(): any;
+    set LocalData(value: any);
+    get HasLocalData(): boolean;
     abstract Run(message: Message, args?: any): Promise<any>;
     Name(): string;
     Namespace(): string;
