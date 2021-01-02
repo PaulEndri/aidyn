@@ -10,7 +10,8 @@ import { ICommandArgument } from '../Interfaces/ICommandArgument';
  */
 
 export abstract class Command implements ICommand {
-	static NAMESPACE: string;
+	public Name: string;
+	public Namespace: string;
 
 	public AllowedGuilds: string[];
 	public Data: any;
@@ -35,26 +36,18 @@ export abstract class Command implements ICommand {
 	}
 
 	public get LocalData() {
-		return this.Data[this.Name()];
+		return this.Data[this.Name];
 	}
 
 	public set LocalData(value: any) {
-		this.Data[this.Name()] = value;
+		this.Data[this.Name] = value;
 	}
 
 	public get HasLocalData(): boolean {
-		return !!this.Data[this.Name()];
+		return !!this.Data[this.Name];
 	}
 
 	abstract Run(message: Message, args?: any): Promise<any>;
-
-	public Name(): string {
-		return Object.getPrototypeOf(this).constructor.NAME;
-	}
-
-	public Namespace(): string {
-		return Object.getPrototypeOf(this).constructor.NAMESPACE;
-	}
 
 	private HasLocalField(name: string): boolean {
 		return this.HasLocalData && !!this.LocalData[name];
@@ -280,11 +273,11 @@ export abstract class Command implements ICommand {
 			return Promise.resolve();
 		}
 
-		let command = await Commands.findOne({ Namespace: this.Namespace() });
+		let command = await Commands.findOne({ Namespace: this.Namespace });
 
 		if (!command) {
 			command = new Commands({
-				Namespace: this.Namespace(),
+				Namespace: this.Namespace,
 				AllowedChannels: [],
 				AllowedRoles: [],
 				AllowedUsers: [],
@@ -295,18 +288,18 @@ export abstract class Command implements ICommand {
 
 		if (this.Modified || force === true) {
 			// Overall all data for this command
-			command.Data[this.Name()] = {
+			command.Data[this.Name] = {
 				AllowedChannels: this.AllowedChannels,
 				AllowedRoles: this.AllowedRoles,
 				AllowedUsers: this.AllowedUsers,
 				AllowedGuilds: this.AllowedGuilds,
 				Type: this.Type,
-				Data: (this.Data[this.Name()] || { data: {} }).Data || {}
+				Data: (this.Data[this.Name] || { data: {} }).Data || {}
 			};
 		}
 
 		// If namespace === name then this is the parent and should be synced as such
-		if (this.Namespace() === this.Name()) {
+		if (this.Namespace === this.Name) {
 			command.AllowedChannels = this.AllowedChannels;
 			command.AllowedRoles = this.AllowedRoles;
 			command.AllowedUsers = this.AllowedUsers;

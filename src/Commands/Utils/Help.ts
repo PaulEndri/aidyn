@@ -31,6 +31,7 @@ export class Help extends Command {
 
 		return `\nHelp for command: ${key}\n\t${command.Blurb}\n\n${args.join('\n')}`;
 	}
+
 	// @ts-ignore
 	public async Run(message: Message, args: any) {
 		if (args && args.command) {
@@ -41,10 +42,10 @@ export class Help extends Command {
 			.filter((cmd: Command) => {
 				const hasPermission = cmd.Validate(message);
 
-				return cmd.Disabled !== true && hasPermission && cmd.Name() !== 'help';
+				return cmd.Disabled !== true && hasPermission && cmd.Name !== 'help';
 			})
 			.map((command: Command) => {
-				let helpString = `\n${this.BotContext.Prefix}${command.Name().toLowerCase()}`;
+				let helpString = `\n${this.BotContext.Prefix}${command.Name.toLowerCase()}`;
 
 				if (command.Arguments && command.Arguments.length > 0) {
 					command.Arguments.forEach((arg: ICommandArgument) => {
